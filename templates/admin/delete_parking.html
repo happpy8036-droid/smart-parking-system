@@ -1,0 +1,24 @@
+{% extends 'layouts/base.html' %}
+{% block title %}Delete Location — Admin{% endblock %}
+{% block content %}
+<section class="page-section">
+    <div class="container">
+        <h1 class="page-title">DELETE PARKING LOCATION</h1>
+        <div class="red-line"></div>
+        <div style="max-width:600px;margin:0 auto;background:#111;border:3px solid #ff4444;padding:2rem;">
+            <p style="color:#fff;font-size:1.2rem;margin-bottom:1rem;">
+                <strong style="color:#ff4444;">WARNING:</strong> You are about to delete:
+            </p>
+            <div style="color:#fff;margin-bottom:2rem;">
+                <p><strong>{{ area.name }}</strong></p>
+                <p>{{ area.address }}</p>
+                <p>{{ area.city }} — {{ area.available_slots }}/{{ area.total_slots }} slots</p>
+            </div>
+            <form method="POST" action="/admin/delete-parking/{{ area.id }}">
+                <button type="submit" class="brutalist-btn" style="background:#ff4444;color:#fff;margin-right:1rem;">CONFIRM DELETE &rarr;</button>
+                <a href="/admin/parking-locations" class="brutalist-btn" style="background:#333;color:#fff;">CANCEL</a>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

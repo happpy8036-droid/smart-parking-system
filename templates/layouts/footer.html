@@ -1,0 +1,25 @@
+<footer class="site-footer" aria-label="Footer">
+    <div class="container">
+
+        <div class="footer-links">
+            <a href="{{ url_for('home.index') }}">Home</a>
+            
+
+            {% if current_user.is_authenticated %}
+                
+            {% else %}
+                <a href="{{ url_for('auth.login') }}">Login</a>
+            {% endif %}
+
+            <!-- New Links -->
+            <a href="/about">About Us</a>
+            <a href="/feedback">Feedback</a>
+            <a href="/contact">Contact Us</a>
+        </div>
+
+        <p class="text-center text-muted mt-3 mb-0">
+            Smart Parking System · Rajahmundry
+        </p>
+
+    </div>
+</footer>

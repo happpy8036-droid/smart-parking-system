@@ -1,0 +1,779 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+Payment - Smart Parking System
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-10">
+
+            <!-- PAGE TITLE -->
+            <div class="text-center mb-4">
+
+                <h1 class="fw-bold">
+                    PAYMENT
+                </h1>
+
+                <p class="text-muted">
+                    Complete your payment to confirm your parking booking.
+                </p>
+
+            </div>
+
+
+            <div class="row g-4">
+
+
+                <!-- ========================================= -->
+                <!-- BOOKING SUMMARY -->
+                <!-- ========================================= -->
+
+                <div class="col-lg-5">
+
+                    <div class="card shadow-lg h-100">
+
+                        <div class="card-body p-4">
+
+                            <h3 class="fw-bold mb-4">
+                                Booking Summary
+                            </h3>
+
+
+                            <!-- PARKING -->
+                            <div class="mb-3">
+
+                                <small class="text-muted">
+                                    PARKING LOCATION
+                                </small>
+
+                                <h5 class="fw-bold">
+                                    {{ area.name }}
+                                </h5>
+
+                            </div>
+
+
+                            <!-- SLOT -->
+                            <div class="mb-3">
+
+                                <small class="text-muted">
+                                    PARKING SLOT
+                                </small>
+
+                                <h5 class="fw-bold">
+                                    {{ slot.slot_number }}
+                                </h5>
+
+                            </div>
+
+
+                            <!-- DATE -->
+                            <div class="mb-3">
+
+                                <small class="text-muted">
+                                    DATE
+                                </small>
+
+                                <h5 class="fw-bold">
+                                    {{ pending.booking_date }}
+                                </h5>
+
+                            </div>
+
+
+                            <!-- TIME -->
+                            <div class="mb-3">
+
+                                <small class="text-muted">
+                                    TIME
+                                </small>
+
+                                <h5 class="fw-bold">
+
+                                    {{ pending.start_time }}
+
+                                    -
+
+                                    {{ pending.end_time }}
+
+                                </h5>
+
+                            </div>
+
+
+                            <!-- DURATION -->
+                            <div class="mb-3">
+
+                                <small class="text-muted">
+                                    DURATION
+                                </small>
+
+                                <h5 class="fw-bold">
+
+                                    {{ pending.hours }}
+                                    hour{% if pending.hours != 1 %}s{% endif %}
+
+                                </h5>
+
+                            </div>
+
+
+                            <hr>
+
+
+                            <!-- PRICE -->
+                            <div class="d-flex justify-content-between">
+
+                                <span>
+                                    Price / Hour
+                                </span>
+
+                                <strong>
+                                    ₹{{ "%.2f"|format(slot.price_per_hour) }}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="d-flex justify-content-between mt-2">
+
+                                <span>
+                                    Duration
+                                </span>
+
+                                <strong>
+                                    {{ pending.hours }} hour(s)
+                                </strong>
+
+                            </div>
+
+
+                            <hr>
+
+
+                            <!-- TOTAL -->
+                            <div class="d-flex justify-content-between align-items-center">
+
+                                <h4 class="fw-bold">
+                                    Total Amount
+                                </h4>
+
+                                <h3 class="fw-bold">
+                                    ₹{{ "%.2f"|format(pending.total_amount) }}
+                                </h3>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ========================================= -->
+                <!-- PAYMENT SECTION -->
+                <!-- ========================================= -->
+
+                <div class="col-lg-7">
+
+                    <div class="card shadow-lg">
+
+                        <div class="card-body p-4">
+
+                            <h3 class="fw-bold mb-4">
+                                Select Payment Method
+                            </h3>
+
+
+                            <form
+                                method="POST"
+                                action="{{ url_for('user.payment') }}"
+                                id="paymentForm"
+                            >
+
+
+                                <!-- ================================= -->
+                                <!-- UPI -->
+                                <!-- ================================= -->
+
+                                <div class="payment-option mb-3">
+
+                                    <label
+                                        class="payment-card"
+                                        for="upi"
+                                    >
+
+                                        <input
+                                            type="radio"
+                                            name="payment_method"
+                                            value="upi"
+                                            id="upi"
+                                            checked
+                                            onchange="showPaymentSection('upiSection')"
+                                        >
+
+                                        <span class="payment-icon">
+                                            📱
+                                        </span>
+
+                                        <span>
+
+                                            <strong>
+                                                UPI
+                                            </strong>
+
+                                            <small class="d-block text-muted">
+                                                Google Pay / PhonePe / Paytm / BHIM
+                                            </small>
+
+                                        </span>
+
+                                    </label>
+
+                                </div>
+
+
+                                <!-- ================================= -->
+                                <!-- UPI SECTION -->
+                                <!-- ================================= -->
+
+                                <div
+                                    id="upiSection"
+                                    class="payment-details mb-4"
+                                >
+
+
+                                    <label class="form-label fw-bold">
+                                        UPI ID
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        name="upi_id"
+                                        id="upi_id"
+                                        class="form-control"
+                                        placeholder="example@upi"
+                                    >
+
+                                    <small class="text-muted">
+                                        Example:
+                                        student@upi
+                                    </small>
+
+                                </div>
+
+
+
+                                <!-- ================================= -->
+                                <!-- CARD -->
+                                <!-- ================================= -->
+
+                                <div class="payment-option mb-3">
+
+                                    <label
+                                        class="payment-card"
+                                        for="card"
+                                    >
+
+                                        <input
+                                            type="radio"
+                                            name="payment_method"
+                                            value="card"
+                                            id="card"
+                                            onchange="showPaymentSection('cardSection')"
+                                        >
+
+                                        <span class="payment-icon">
+                                            💳
+                                        </span>
+
+                                        <span>
+
+                                            <strong>
+                                                Debit / Credit Card
+                                            </strong>
+
+                                            <small class="d-block text-muted">
+                                                Visa / Mastercard / RuPay
+                                            </small>
+
+                                        </span>
+
+                                    </label>
+
+                                </div>
+
+
+                                <!-- CARD SECTION -->
+
+                                <div
+                                    id="cardSection"
+                                    class="payment-details mb-4"
+                                    style="display:none;"
+                                >
+
+                                    
+
+                                    <label class="form-label">
+                                        Card Number
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        class="form-control mb-3"
+                                        placeholder="1234 5678 9012 3456"
+                                        maxlength="19"
+                                    >
+
+                                    <div class="row">
+
+                                        <div class="col-md-6">
+
+                                            <label class="form-label">
+                                                Expiry
+                                            </label>
+
+                                            <input
+                                                type="text"
+                                                class="form-control"
+                                                placeholder="MM/YY"
+                                            >
+
+                                        </div>
+
+
+                                        <div class="col-md-6">
+
+                                            <label class="form-label">
+                                                CVV
+                                            </label>
+
+                                            <input
+                                                type="password"
+                                                class="form-control"
+                                                placeholder="***"
+                                                maxlength="3"
+                                            >
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- ================================= -->
+                                <!-- NET BANKING -->
+                                <!-- ================================= -->
+
+                                <div class="payment-option mb-3">
+
+                                    <label
+                                        class="payment-card"
+                                        for="netbanking"
+                                    >
+
+                                        <input
+                                            type="radio"
+                                            name="payment_method"
+                                            value="netbanking"
+                                            id="netbanking"
+                                            onchange="showPaymentSection('bankSection')"
+                                        >
+
+                                        <span class="payment-icon">
+                                            🏦
+                                        </span>
+
+                                        <span>
+
+                                            <strong>
+                                                Net Banking
+                                            </strong>
+
+                                            <small class="d-block text-muted">
+                                                SBI / HDFC / ICICI / Other Banks
+                                            </small>
+
+                                        </span>
+
+                                    </label>
+
+                                </div>
+
+
+                                <!-- BANK SECTION -->
+
+                                <div
+                                    id="bankSection"
+                                    class="payment-details mb-4"
+                                    style="display:none;"
+                                >
+
+                                    <label class="form-label fw-bold">
+                                        Select Bank
+                                    </label>
+
+                                    <select
+                                        class="form-select"
+                                    >
+
+                                        <option>
+                                            Select Bank
+                                        </option>
+
+                                        <option>
+                                            State Bank of India
+                                        </option>
+
+                                        <option>
+                                            HDFC Bank
+                                        </option>
+
+                                        <option>
+                                            ICICI Bank
+                                        </option>
+
+                                        <option>
+                                            Axis Bank
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+
+                                <!-- ================================= -->
+                                <!-- WALLET -->
+                                <!-- ================================= -->
+
+                                <div class="payment-option mb-3">
+
+                                    <label
+                                        class="payment-card"
+                                        for="wallet"
+                                    >
+
+                                        <input
+                                            type="radio"
+                                            name="payment_method"
+                                            value="wallet"
+                                            id="wallet"
+                                            onchange="showPaymentSection('walletSection')"
+                                        >
+
+                                        <span class="payment-icon">
+                                            👛
+                                        </span>
+
+                                        <span>
+
+                                            <strong>
+                                                Wallet
+                                            </strong>
+
+                                            <small class="d-block text-muted">
+                                                Paytm / PhonePe Wallet
+                                            </small>
+
+                                        </span>
+
+                                    </label>
+
+                                </div>
+
+
+                                <!-- WALLET SECTION -->
+
+                                <div
+                                    id="walletSection"
+                                    class="payment-details mb-4"
+                                    style="display:none;"
+                                >
+
+                                    <label class="form-label fw-bold">
+                                        Wallet Mobile Number
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Enter mobile number"
+                                    >
+
+                                </div>
+
+
+
+                                <!-- ================================= -->
+                                <!-- PAYMENT BUTTON -->
+                                <!-- ================================= -->
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary btn-lg w-100"
+                                    onclick="return confirmPayment()"
+                                >
+
+                                    🔒 Pay ₹{{ "%.2f"|format(pending.total_amount) }}
+
+                                </button>
+
+
+                                <div class="text-center mt-3">
+
+                                    <small class="text-muted">
+
+                                        
+                                    </small>
+
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endblock %}
+
+
+
+{% block extra_css %}
+
+<style>
+
+    /* =========================================
+       PAYMENT OPTIONS
+       ========================================= */
+
+    .payment-card {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 15px;
+
+        padding: 16px;
+
+        border: 2px solid #ddd;
+
+        border-radius: 10px;
+
+        cursor: pointer;
+
+        transition: 0.2s ease;
+
+    }
+
+
+    .payment-card:hover {
+
+        border-color: #6b7d3a;
+
+        transform: translateY(-2px);
+
+    }
+
+
+    .payment-card input {
+
+        width: 18px;
+
+        height: 18px;
+
+    }
+
+
+    .payment-icon {
+
+        font-size: 30px;
+
+        width: 45px;
+
+        text-align: center;
+
+    }
+
+
+    .payment-details {
+
+        padding: 18px;
+
+        border-radius: 10px;
+
+        background: rgba(107, 125, 58, 0.08);
+
+    }
+
+
+</style>
+
+{% endblock %}
+
+
+
+{% block extra_js %}
+
+<script>
+
+    // =========================================
+    // SHOW PAYMENT SECTION
+    // =========================================
+
+    function showPaymentSection(sectionId) {
+
+        const sections = [
+
+            'upiSection',
+
+            'cardSection',
+
+            'bankSection',
+
+            'walletSection',
+
+            'cashSection'
+
+        ];
+
+
+        sections.forEach(function(section) {
+
+            const element =
+                document.getElementById(section);
+
+            if (element) {
+
+                element.style.display = 'none';
+
+            }
+
+        });
+
+
+        const selected =
+            document.getElementById(sectionId);
+
+
+        if (selected) {
+
+            selected.style.display = 'block';
+
+        }
+
+    }
+
+
+
+    // =========================================
+    // PAYMENT CONFIRMATION
+    // =========================================
+
+    function confirmPayment() {
+
+        const method =
+            document.querySelector(
+                'input[name="payment_method"]:checked'
+            );
+
+
+        if (!method) {
+
+            alert(
+                'Please select a payment method.'
+            );
+
+            return false;
+
+        }
+
+
+        if (method.value === 'upi') {
+
+            const upi =
+                document.getElementById('upi_id').value.trim();
+
+
+            if (!upi) {
+
+                alert(
+                    'Please enter a demo UPI ID.'
+                );
+
+                return false;
+
+            }
+
+
+            if (!upi.includes('@')) {
+
+                alert(
+                    'Please enter a valid demo UPI ID.'
+                );
+
+                return false;
+
+            }
+
+        }
+
+
+        return confirm(
+            'Proceed with payment of ₹{{ "%.2f"|format(pending.total_amount) }}?'
+        );
+
+    }
+
+</script>
+@user_bp.route('/parking-pass/<int:booking_id>')
+@login_required
+def parking_pass(booking_id):
+
+    booking = Booking.query.filter_by(
+        id=booking_id,
+        user_id=current_user.id
+    ).first_or_404()
+
+    area = ParkingArea.query.get(booking.area_id)
+    slot = ParkingSlot.query.get(booking.slot_id)
+
+    vehicle = None
+
+    if booking.vehicle_id:
+        vehicle = Vehicle.query.filter_by(
+            id=booking.vehicle_id,
+            user_id=current_user.id
+        ).first()
+
+    return render_template(
+        'user/parking_pass.html',
+        booking=booking,
+        area=area,
+        slot=slot,
+        vehicle=vehicle
+    )
+
+{% endblock %}

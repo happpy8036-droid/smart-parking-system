@@ -1,0 +1,51 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Bookings — Admin{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 1200px; margin: 0 auto; padding: 2rem 1rem;">
+    <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 2rem;">ALL BOOKINGS</h1>
+
+    {% if bookings %}
+    <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr style="text-align: left; border-bottom: 2px solid rgba(255,255,255,0.1);">
+                    <th style="padding: 0.75rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6;">ID</th>
+                    <th style="padding: 0.75rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6;">USER</th>
+                    <th style="padding: 0.75rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6;">LOCATION</th>
+                    <th style="padding: 0.75rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6;">SLOT</th>
+                    <th style="padding: 0.75rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6;">AMOUNT</th>
+                    <th style="padding: 0.75rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6;">STATUS</th>
+                    <th style="padding: 0.75rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6;">DATE</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for b in bookings %}
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <td style="padding: 0.75rem;">{{ b.id }}</td>
+                    <td style="padding: 0.75rem;">{{ b.user.name if b.user else 'N/A' }}</td>
+                    <td style="padding: 0.75rem;">{{ b.parking_area.name if b.parking_area else 'N/A' }}</td>
+                    <td style="padding: 0.75rem;">{{ b.slot.slot_number if b.slot else 'N/A' }}</td>
+                    <td style="padding: 0.75rem;">₹{{ "%.2f"|format(b.total_amount) }}</td>
+                    <td style="padding: 0.75rem;">
+                        <span style="padding: 0.2rem 0.6rem; border-radius: 100px; font-size: 0.7rem; font-weight: 600;
+                            {% if b.status == 'confirmed' %}background: rgba(16,185,129,0.15); color: #10B981;
+                            {% elif b.status == 'cancelled' %}background: rgba(239,68,68,0.15); color: #EF4444;
+                            {% else %}background: rgba(251,191,36,0.15); color: #FBBF24;{% endif %}
+                        ">{{ b.status|upper }}</span>
+                    </td>
+                    <td style="padding: 0.75rem;">{{ b.created_at.strftime('%d %b %Y, %I:%M %p') if b.created_at else 'N/A' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div style="text-align: center; padding: 4rem; opacity: 0.6;">
+        <p style="font-size: 3rem;">📋</p>
+        <p style="font-size: 1.25rem; font-weight: 600;">No Bookings Yet</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

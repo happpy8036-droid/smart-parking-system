@@ -1,0 +1,37 @@
+<nav class="brutalist-nav">
+    <div class="nav-inner">
+            <a href="/" class="nav-logo">
+                <span class="logo-text">SMART<span class="logo-accent">PARKING</span></span>
+            </a>
+            <button class="nav-toggle" onclick="toggleNav()">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav-links" id="navLinks">
+                <a href="/" class="nav-link">HOME</a>
+                <a href="/user/search" class="nav-link">SEARCH</a>
+                <a href="/user/parking-list" class="nav-link">LOCATIONS</a>
+                {% if current_user.is_authenticated %}
+                    {% if current_user.__class__.__name__ == 'Admin' %}
+                        <a href="/admin/dashboard" class="nav-link nav-admin">ADMIN PANEL</a>
+                        <a href="/admin/parking-locations" class="nav-link">LOCATIONS</a>
+                        <a href="/admin/bookings" class="nav-link">BOOKINGS</a>
+                        <a href="{{ url_for('admin.occupancy_heatmap') }}">
+                          🔥 Occupancy Heatmap
+                          </a>
+                        <a href="/logout" class="nav-link nav-logout">LOGOUT</a>
+                    {% else %}
+                        <a href="/user/dashboard" class="nav-link">DASHBOARD</a>
+                        <a href="/user/booking-history" class="nav-link">BOOKINGS</a>
+                        <a href="{{ url_for('user.vehicles') }}" class="nav-link">
+                         🚗 VEHICLES
+                         </a>
+                        <a href="/logout" class="nav-link nav-logout">LOGOUT</a>
+                    {% endif %}
+                {% else %}
+                    <a href="/login" class="nav-link">LOGIN</a>
+                    <a href="/register" class="nav-link nav-signup">SIGN UP</a>
+                {% endif %}
+             
+            </div>
+    </div>
+</nav>

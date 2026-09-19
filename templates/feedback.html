@@ -1,0 +1,64 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Feedback - Smart Parking System{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="text-center mb-5">
+        <h1>YOUR <span style="color:#6015c2;">FEEDBACK</span></h1>
+        <p class="text-muted">
+            Help us improve Smart Parking System.
+        </p>
+    </div>
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-7">
+
+            <form method="POST"
+                  class="card p-4"
+                  style="background:#1b283d; border:1px solid #334155;">
+
+                <label class="form-label text-white">
+                    Rating
+                </label>
+
+                <select name="rating"
+                        class="form-control mb-3"
+                        required>
+
+                    <option value="">Select Rating</option>
+                    <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+                    <option value="4">⭐⭐⭐⭐ Very Good</option>
+                    <option value="3">⭐⭐⭐ Good</option>
+                    <option value="2">⭐⭐ Needs Improvement</option>
+                    <option value="1">⭐ Poor</option>
+
+                </select>
+
+                <label class="form-label text-white">
+                    Your Feedback
+                </label>
+
+                <textarea name="comment"
+                          class="form-control mb-3"
+                          rows="6"
+                          placeholder="Write your feedback here..."
+                          required></textarea>
+
+                <button type="submit"
+                        class="btn btn-success w-100">
+                    SUBMIT FEEDBACK →
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

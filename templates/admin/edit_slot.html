@@ -1,0 +1,38 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Edit Slot — {{ slot.slot_number }}{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 500px; margin: 0 auto; padding: 2rem 1rem;">
+    <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 2rem;">EDIT SLOT {{ slot.slot_number }}</h1>
+
+    <form method="POST" action="/admin/edit-slot/{{ slot.id }}">
+        <div style="margin-bottom: 1.5rem;">
+            <label style="display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; font-weight: 600;">Slot Type</label>
+            <select name="slot_type" required style="width: 100%; padding: 0.75rem 1rem; background: rgba(255,255,255,0.08); border: 2px solid rgba(255,255,255,0.15); border-radius: 8px; color: #fff; font-size: 1rem;">
+                <option value="standard" {% if slot.slot_type == 'standard' %}selected{% endif %}>Standard</option>
+                <option value="premium" {% if slot.slot_type == 'premium' %}selected{% endif %}>Premium</option>
+                <option value="ev_charging" {% if slot.slot_type == 'ev_charging' %}selected{% endif %}>EV Charging</option>
+                <option value="handicap" {% if slot.slot_type == 'handicap' %}selected{% endif %}>Handicap</option>
+                <option value="bike" {% if slot.slot_type == 'bike' %}selected{% endif %}>Bike</option>
+            </select>
+        </div>
+        <div style="margin-bottom: 1.5rem;">
+            <label style="display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; font-weight: 600;">Status</label>
+            <select name="status" required style="width: 100%; padding: 0.75rem 1rem; background: rgba(255,255,255,0.08); border: 2px solid rgba(255,255,255,0.15); border-radius: 8px; color: #fff; font-size: 1rem;">
+                <option value="available" {% if slot.status == 'available' %}selected{% endif %}>Available</option>
+                <option value="occupied" {% if slot.status == 'occupied' %}selected{% endif %}>Occupied</option>
+                <option value="maintenance" {% if slot.status == 'maintenance' %}selected{% endif %}>Maintenance</option>
+            </select>
+        </div>
+        <div style="margin-bottom: 1.5rem;">
+            <label style="display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; font-weight: 600;">Price Per Hour (₹)</label>
+            <input type="number" name="price_per_hour" value="{{ slot.price_per_hour }}" required step="0.01" min="0" style="width: 100%; padding: 0.75rem 1rem; background: rgba(255,255,255,0.08); border: 2px solid rgba(255,255,255,0.15); border-radius: 8px; color: #fff; font-size: 1rem;" onfocus="this.style.borderColor='#10B981'" onblur="this.style.borderColor='rgba(255,255,255,0.15)'">
+        </div>
+        <div style="display: flex; gap: 1rem;">
+            <button type="submit" class="brutalist-btn" style="flex: 1;">UPDATE SLOT</button>
+            <a href="/admin/parking-slots/{{ slot.area_id }}" class="brutalist-btn btn-secondary">CANCEL</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

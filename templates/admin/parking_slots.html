@@ -1,0 +1,89 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Slots — {{ area.name }}{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 1200px; margin: 0 auto; padding: 2rem 1rem;">
+
+    <!-- Header -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+            <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.25rem;">PARKING SLOTS</h1>
+            <p style="font-size: 1rem; opacity: 0.7; margin: 0;">{{ area.name }} — {{ area.city }}</p>
+        </div>
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <a href="/admin/add-slot/{{ area.id }}" class="brutalist-btn">ADD SLOT →</a>
+            <a href="/admin/parking-locations" class="brutalist-btn btn-secondary">← BACK</a>
+        </div>
+    </div>
+
+    <!-- Area Info -->
+    <div class="info-card" style="margin-bottom: 2rem; padding: 1.5rem;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1.5rem;">
+            <div>
+                <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6; display: block; margin-bottom: 0.25rem;">Total Slots</span>
+                <span style="font-size: 1.5rem; font-weight: 700;">{{ slots|length }}</span>
+            </div>
+            <div>
+                <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6; display: block; margin-bottom: 0.25rem;">Available</span>
+                <span style="font-size: 1.5rem; font-weight: 700; color: #10B981;">{{ slots|selectattr('status', 'equalto', 'available')|list|length }}</span>
+            </div>
+            <div>
+                <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6; display: block; margin-bottom: 0.25rem;">Occupied</span>
+                <span style="font-size: 1.5rem; font-weight: 700; color: #EF4444;">{{ slots|selectattr('status', 'equalto', 'occupied')|list|length }}</span>
+            </div>
+            <div>
+                <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6; display: block; margin-bottom: 0.25rem;">Price/Hr</span>
+                <span style="font-size: 1.5rem; font-weight: 700;">₹{{ "%.0f"|format(area.price_per_hour) }}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slots Grid -->
+    {% if slots %}
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem;">
+        {% for slot in slots %}
+        <div class="location-card" style="padding: 1.25rem; position: relative;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
+                <span style="font-size: 1.25rem; font-weight: 700;">{{ slot.slot_number }}</span>
+                <span class="badge" style="
+                    padding: 0.25rem 0.75rem;
+                    border-radius: 100px;
+                    font-size: 0.7rem;
+                    font-weight: 600;
+                    text-transform: uppercase;
+                    {% if slot.status == 'available' %}
+                        background: rgba(16, 185, 129, 0.15);
+                        color: #10B981;
+                    {% elif slot.status == 'occupied' %}
+                        background: rgba(239, 68, 68, 0.15);
+                        color: #EF4444;
+                    {% else %}
+                        background: rgba(251, 191, 36, 0.15);
+                        color: #FBBF24;
+                    {% endif %}
+                ">
+                    {{ slot.status }}
+                </span>
+            </div>
+            <div style="display: flex; gap: 1.5rem; font-size: 0.85rem; opacity: 0.7; margin-bottom: 0.75rem;">
+                <span>🏷️ {{ slot.slot_type|replace('_', ' ')|title }}</span>
+                <span>₹{{ "%.0f"|format(slot.price_per_hour) }}/hr</span>
+            </div>
+            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                <a href="/admin/delete-slot/{{ slot.id }}" class="brutalist-btn btn-danger" style="font-size: 0.7rem; padding: 0.4rem 0.75rem;">DELETE</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div style="text-align: center; padding: 4rem 2rem; opacity: 0.6;">
+        <p style="font-size: 3rem; margin-bottom: 1rem;">🅿️</p>
+        <p style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">No Slots Yet</p>
+        <p style="font-size: 0.9rem; margin-bottom: 1.5rem;">Add parking slots for this location.</p>
+        <a href="/admin/add-slot/{{ area.id }}" class="brutalist-btn">ADD FIRST SLOT →</a>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}

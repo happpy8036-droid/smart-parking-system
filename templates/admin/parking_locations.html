@@ -1,0 +1,34 @@
+{% extends 'layouts/base.html' %}
+{% block title %}Parking Locations — Admin{% endblock %}
+{% block content %}
+<section class="page-section">
+    <div class="container">
+        <h1 class="page-title">PARKING LOCATIONS</h1>
+        <div class="red-line"></div>
+        <a href="/admin/add-parking" class="brutalist-btn" style="margin-bottom:2rem;display:inline-block;">ADD NEW LOCATION &rarr;</a>
+        <div class="table-container">
+            <table class="brutalist-table">
+                <thead><tr><th>ID</th><th>NAME</th><th>CITY</th><th>SLOTS</th><th>PRICE</th><th>STATUS</th><th>ACTIONS</th></tr></thead>
+                <tbody>
+                    {% for a in areas %}
+                    <tr>
+                        <td>{{ a.id }}</td>
+                        <td>{{ a.name }}</td>
+                        <td>{{ a.city }}</td>
+                        <td>{{ a.available_slots }}/{{ a.total_slots }}</td>
+                        <td>₹{{ '%0.0f'|format(a.price_per_hour) }}/HR</td>
+                        <td><span class="status-{{ 'confirmed' if a.is_active else 'cancelled' }}">{{ 'ACTIVE' if a.is_active else 'INACTIVE' }}</span></td>
+                        <td>
+                            <a href="/admin/edit-parking/{{ a.id }}" class="table-link">EDIT</a>
+                            <a href="/admin/parking-details/{{ a.id }}" class="table-link">DETAILS</a>
+                            <a href="/admin/parking-slots/{{ a.id }}" class="table-link">SLOTS</a>
+                            <a href="/admin/delete-parking/{{ a.id }}" class="table-link" style="color:#ff4444;">DELETE</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

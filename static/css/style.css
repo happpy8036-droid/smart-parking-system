@@ -1,0 +1,2794 @@
+/* ============================================================
+   SMART PARKING SYSTEM
+   DARK OLIVE + CREAM PREMIUM CLASSIC THEME
+   SINGLE CSS FILE
+   ============================================================ */
+
+/* ================= RESET ================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --olive-dark: #171b0e;
+    --olive-darker: #101309;
+    --olive: #252b18;
+    --olive-light: #3f4725;
+    --olive-soft: #596334;
+
+    --cream: #f4edda;
+    --cream-light: #fffaf0;
+    --cream-dark: #dfd4b9;
+
+    --gold: #d4a72c;
+    --gold-dark: #b8860b;
+    --gold-light: #e8c45a;
+
+    --burgundy: #7a1f2b;
+    --burgundy-dark: #5c1620;
+    --burgundy-light: #9b3441;
+
+    --white: #ffffff;
+    --black: #111111;
+
+    --text: #f4edda;
+    --text-light: #c7c1ae;
+    --text-muted: #9d9b89;
+
+    --success: #7fa650;
+    --danger: #b42318;
+    --warning: #c08a27;
+    --info: #78978c;
+
+    --border: rgba(244, 237, 218, 0.14);
+    --border-gold: rgba(212, 167, 44, 0.45);
+
+    --shadow-sm: 0 3px 10px rgba(0, 0, 0, 0.25);
+    --shadow-md: 0 10px 28px rgba(0, 0, 0, 0.35);
+    --shadow-lg: 0 18px 45px rgba(0, 0, 0, 0.50);
+
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+
+    --transition: all 0.25s ease;
+}
+
+
+/* ================= BODY ================= */
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+
+    background:
+        radial-gradient(
+            circle at top right,
+            #414b25 0%,
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at bottom left,
+            #30391d 0%,
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            var(--olive-darker),
+            var(--olive-dark) 45%,
+            var(--olive) 100%
+        );
+
+    color: var(--text);
+
+    font-family:
+        "Georgia",
+        "Times New Roman",
+        serif;
+
+    line-height: 1.6;
+}
+
+a {
+    color: var(--cream);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+a:hover {
+    color: var(--gold-light);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+}
+
+
+/* ================= SCROLLBAR ================= */
+
+::-webkit-scrollbar {
+    width: 9px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--olive-darker);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--olive-soft);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gold);
+}
+
+
+/* ================= CONTAINER ================= */
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+
+.brutalist-nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    width: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #171b0e,
+            #252b18,
+            #171b0e
+        );
+
+    border-bottom: 3px solid var(--gold);
+
+    padding: 0.85rem 0;
+
+    box-shadow: var(--shadow-md);
+}
+
+
+/* IMPORTANT HEADER ALIGNMENT */
+
+.nav-inner {
+    width: 100%;
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    padding: 0 1.5rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 1rem;
+}
+
+
+/* LOGO */
+
+.nav-logo {
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 1.5rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.5px;
+
+    color: var(--cream);
+
+    white-space: nowrap;
+}
+
+.nav-logo:hover {
+    color: var(--gold-light);
+}
+
+.logo-text {
+    color: var(--cream);
+}
+
+.logo-accent {
+    color: var(--gold);
+}
+
+
+/* NAV LINKS */
+
+.nav-links {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 0.3rem;
+
+    list-style: none;
+}
+
+.nav-link {
+    display: inline-block;
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    font-size: 0.9rem;
+
+    font-weight: 600;
+
+    color: #ddd7c6;
+
+    padding: 0.6rem 0.85rem;
+
+    border-radius: var(--radius-sm);
+
+    transition: var(--transition);
+}
+
+.nav-link:hover {
+    color: var(--gold-light);
+
+    background:
+        rgba(212, 167, 44, 0.12);
+}
+
+.nav-link.nav-admin {
+    background: var(--burgundy);
+
+    color: var(--white);
+
+    border:
+        1px solid var(--burgundy-light);
+}
+
+.nav-link.nav-admin:hover {
+    background: var(--burgundy-light);
+
+    color: var(--white);
+}
+
+.nav-logout {
+    color: #e89a91;
+}
+
+.nav-logout:hover {
+    background:
+        rgba(180, 35, 24, 0.20);
+
+    color: #ffb4ae;
+}
+
+.nav-signup {
+    background: var(--gold);
+
+    color: var(--olive-dark) !important;
+
+    padding: 0.55rem 1.15rem;
+
+    border-radius: var(--radius-sm);
+
+    font-weight: 700;
+
+    border:
+        1px solid var(--gold-light);
+}
+
+.nav-signup:hover {
+    background: var(--gold-light);
+
+    color: var(--olive-dark) !important;
+}
+
+
+/* MOBILE NAV BUTTON */
+
+.nav-toggle {
+    display: none;
+
+    background: transparent;
+
+    border: none;
+
+    cursor: pointer;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+    padding: 8px;
+}
+
+.nav-toggle span {
+    width: 25px;
+    height: 3px;
+
+    background: var(--gold);
+
+    border-radius: 2px;
+}
+
+
+/* ============================================================
+   HERO
+   ============================================================ */
+
+.hero-section {
+    min-height: 72vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 5rem 2rem;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(16, 19, 9, 0.90),
+            rgba(63, 71, 37, 0.82)
+        );
+
+    border-bottom:
+        4px solid var(--gold);
+
+    position: relative;
+}
+
+.hero-section::before {
+    content: "";
+
+    position: absolute;
+
+    top: 25px;
+
+    left: 5%;
+
+    right: 5%;
+
+    height: 1px;
+
+    background:
+        rgba(212, 167, 44, 0.35);
+}
+
+.hero-title {
+    font-size:
+        clamp(2.5rem, 6vw, 4.3rem);
+
+    font-weight: 700;
+
+    line-height: 1.1;
+
+    color: var(--cream-light);
+
+    margin-bottom: 1rem;
+
+    letter-spacing: 0.5px;
+}
+
+.accent-line {
+    color: var(--gold-light);
+
+    display: block;
+
+    font-size:
+        clamp(1.6rem, 4vw, 2.6rem);
+
+    margin-top: 0.6rem;
+}
+
+.hero-subtitle {
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    font-size: 1.1rem;
+
+    color: #d1cbb8;
+
+    margin:
+        1.5rem auto 2.5rem;
+
+    max-width: 650px;
+}
+
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+
+.brutalist-btn {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 0.5rem;
+
+    background: var(--burgundy);
+
+    color: var(--white);
+
+    border:
+        1px solid var(--burgundy);
+
+    padding:
+        0.75rem 1.5rem;
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    font-size: 0.9rem;
+
+    font-weight: 700;
+
+    border-radius: var(--radius-sm);
+
+    cursor: pointer;
+
+    transition: var(--transition);
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+
+    box-shadow: var(--shadow-sm);
+}
+
+.brutalist-btn:hover {
+    background: var(--burgundy-dark);
+
+    color: var(--white);
+
+    transform: translateY(-2px);
+
+    box-shadow: var(--shadow-md);
+}
+
+.brutalist-btn:active {
+    transform: translateY(0);
+}
+
+
+/* GOLD BUTTON */
+
+.brutalist-btn.btn-gold {
+    background: var(--gold);
+
+    color: var(--olive-dark);
+
+    border-color: var(--gold);
+}
+
+.brutalist-btn.btn-gold:hover {
+    background: var(--gold-light);
+
+    color: var(--olive-dark);
+}
+
+
+/* OUTLINE */
+
+.brutalist-btn.btn-outline {
+    background: transparent;
+
+    border:
+        2px solid var(--gold);
+
+    color: var(--gold);
+}
+
+.brutalist-btn.btn-outline:hover {
+    background: var(--gold);
+
+    color: var(--olive-dark);
+}
+
+
+/* DANGER */
+
+.brutalist-btn.btn-danger {
+    background: var(--danger);
+
+    border-color: var(--danger);
+}
+
+.brutalist-btn.btn-danger:hover {
+    background: #8e1c13;
+}
+
+
+/* WARNING */
+
+.brutalist-btn.btn-warning {
+    background: var(--warning);
+
+    color: var(--white);
+
+    border-color: var(--warning);
+}
+
+
+/* ============================================================
+   CARDS
+   ============================================================ */
+
+.locations-grid,
+.steps-grid,
+.stats-grid,
+.settings-grid,
+.report-grid,
+.vehicles-grid,
+.services-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fill, minmax(280px, 1fr));
+
+    gap: 1.5rem;
+
+    margin: 2rem auto;
+
+    max-width: 1200px;
+
+    padding: 0 1rem;
+}
+
+
+/* DARK OLIVE CARDS */
+
+.location-card,
+.step-card,
+.stat-box,
+.auth-card,
+.info-card,
+.vehicle-card,
+.service-card,
+.report-card,
+.invoice-card,
+.booking-summary,
+.booking-card,
+.card {
+    background:
+        linear-gradient(
+            145deg,
+            #3b4323,
+            #252b18
+        );
+
+    color: var(--cream);
+
+    border:
+        1px solid var(--border);
+
+    border-top:
+        4px solid var(--gold);
+
+    border-radius:
+        var(--radius-md);
+
+    padding: 1.5rem;
+
+    box-shadow: var(--shadow-md);
+
+    transition: var(--transition);
+}
+
+.location-card:hover,
+.step-card:hover,
+.stat-box:hover,
+.vehicle-card:hover,
+.service-card:hover,
+.report-card:hover {
+    transform: translateY(-4px);
+
+    border-top-color:
+        var(--cream);
+
+    box-shadow: var(--shadow-lg);
+}
+
+
+/* CARD TEXT */
+
+.location-name,
+.auth-title,
+.card-title {
+    font-size: 1.3rem;
+
+    font-weight: 700;
+
+    color: var(--cream-light);
+
+    margin-bottom: 0.5rem;
+}
+
+.location-address,
+.location-area {
+    color: var(--text-light);
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    font-size: 0.88rem;
+
+    margin-bottom: 0.75rem;
+}
+
+.stat-price {
+    color: var(--gold-light);
+
+    font-weight: 700;
+
+    font-size: 1.15rem;
+}
+
+.card-text {
+    color: var(--text-light);
+}
+
+
+/* ============================================================
+   TABLE
+   ============================================================ */
+
+.brutalist-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    margin: 1.5rem 0;
+
+    background: #2b321b;
+
+    box-shadow: var(--shadow-sm);
+
+    border:
+        1px solid var(--border);
+}
+
+.brutalist-table th,
+.brutalist-table td {
+    padding: 0.9rem 1rem;
+
+    text-align: left;
+
+    border-bottom:
+        1px solid var(--border);
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    font-size: 0.9rem;
+}
+
+.brutalist-table th {
+    color: var(--cream-light);
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    font-size: 0.75rem;
+
+    letter-spacing: 1px;
+
+    background:
+        #171b0e;
+}
+
+.brutalist-table td {
+    color: #d9d2bf;
+}
+
+.brutalist-table tr:hover td {
+    background:
+        rgba(212, 167, 44, 0.08);
+}
+
+.table-link {
+    color: var(--gold-light);
+
+    font-weight: 700;
+
+    padding:
+        0.25rem 0.5rem;
+}
+
+.table-link:hover {
+    color: var(--cream-light);
+}
+
+
+/* ============================================================
+   FORMS
+   ============================================================ */
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    font-size: 0.85rem;
+
+    font-weight: 700;
+
+    color: var(--cream);
+
+    margin-bottom: 0.5rem;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+}
+
+.brutalist-input,
+.form-control,
+.form-select,
+input,
+select,
+textarea {
+    width: 100%;
+
+    background:
+        #202615;
+
+    border:
+        1px solid rgba(244, 237, 218, 0.20);
+
+    color: var(--cream-light);
+
+    padding:
+        0.75rem 1rem;
+
+    border-radius:
+        var(--radius-sm);
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    font-size: 0.95rem;
+
+    transition: var(--transition);
+}
+
+.brutalist-input:focus,
+.form-control:focus,
+.form-select:focus,
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+
+    background:
+        #2c341b;
+
+    color: var(--cream-light);
+
+    border-color:
+        var(--gold);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(212, 167, 44, 0.12);
+}
+
+.brutalist-input::placeholder,
+.form-control::placeholder,
+textarea::placeholder {
+    color: #929580;
+}
+
+select option {
+    background: #252b18;
+
+    color: var(--cream);
+}
+
+textarea {
+    resize: vertical;
+
+    min-height: 110px;
+}
+
+
+/* ============================================================
+   AUTH
+   ============================================================ */
+
+.auth-card {
+    max-width: 430px;
+
+    margin: 3rem auto;
+
+    padding: 2.5rem;
+
+    border-top:
+        5px solid var(--gold);
+}
+
+.auth-title {
+    font-size: 1.6rem;
+
+    text-align: center;
+}
+
+.auth-line {
+    height: 3px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--burgundy),
+            var(--gold)
+        );
+
+    margin:
+        1rem auto 2rem;
+
+    width: 80px;
+}
+
+
+/* ============================================================
+   PASSWORD
+   ============================================================ */
+
+.password-wrapper {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+}
+
+.password-wrapper .brutalist-input {
+    padding-right: 3rem;
+}
+
+.password-toggle {
+    position: absolute;
+
+    right: 0.75rem;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    background: none;
+
+    border: none;
+
+    color: var(--text-muted);
+
+    cursor: pointer;
+}
+
+.password-toggle:hover {
+    color: var(--gold);
+}
+
+
+/* ============================================================
+   STATUS
+   ============================================================ */
+
+.status-confirmed {
+    color: #9bc873;
+
+    font-weight: 700;
+}
+
+.status-cancelled,
+.status-failed {
+    color: #e47770;
+
+    font-weight: 700;
+}
+
+.status-pending {
+    color: var(--gold-light);
+
+    font-weight: 700;
+}
+
+
+/* ============================================================
+   DIVIDERS
+   ============================================================ */
+
+.red-divider,
+.red-line {
+    height: 3px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--burgundy),
+            var(--gold)
+        );
+
+    border-radius: 2px;
+
+    margin: 1rem 0;
+
+    width: 90px;
+}
+
+
+/* ============================================================
+   PAGE
+   ============================================================ */
+
+.page-section {
+    padding: 3rem 0;
+
+    min-height:
+        calc(100vh - 80px);
+}
+
+.page-title {
+    font-size: 2rem;
+
+    font-weight: 700;
+
+    color: var(--cream-light);
+
+    margin-bottom: 0.5rem;
+}
+
+.page-subtitle {
+    color: var(--text-light);
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    font-size: 1rem;
+
+    margin-bottom: 2rem;
+}
+
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+
+footer,
+.site-footer {
+    background:
+        linear-gradient(
+            90deg,
+            #101309,
+            #252b18,
+            #101309
+        );
+
+    border-top:
+        3px solid var(--gold);
+
+    padding:
+        2.5rem 0;
+
+    margin-top: 4rem;
+
+    color: var(--text-light);
+}
+
+footer .footer-links,
+.site-footer .footer-links {
+    display: flex;
+
+    gap: 2rem;
+
+    justify-content: center;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+}
+
+footer a,
+.site-footer a {
+    color: #d0cab8;
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    font-size: 0.9rem;
+}
+
+footer a:hover,
+.site-footer a:hover {
+    color: var(--gold-light);
+}
+
+
+/* ============================================================
+   PARKING LOT
+   ============================================================ */
+
+.parking-lot-container {
+    background:
+        #2a311b;
+
+    border:
+        2px solid var(--olive-soft);
+
+    border-radius:
+        var(--radius-md);
+
+    padding: 2rem;
+
+    max-width: 900px;
+
+    margin: 2rem auto;
+
+    box-shadow:
+        var(--shadow-lg);
+}
+
+.entrance-gate {
+    text-align: center;
+
+    font-weight: 800;
+
+    letter-spacing: 3px;
+
+    color: var(--gold-light);
+
+    margin-bottom: 2rem;
+
+    font-size: 1.1rem;
+}
+
+.gate-line {
+    height: 3px;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            var(--gold),
+            var(--gold) 15px,
+            transparent 15px,
+            transparent 30px
+        );
+
+    margin:
+        10px auto 0;
+
+    width: 50%;
+}
+
+.parking-row {
+    display: flex;
+
+    align-items: center;
+
+    margin-bottom: 0.75rem;
+
+    gap: 1rem;
+}
+
+.row-label {
+    font-size: 1.25rem;
+
+    font-weight: 700;
+
+    color: var(--cream);
+
+    width: 40px;
+
+    text-align: center;
+}
+
+.slots-container {
+    display: flex;
+
+    gap: 0.75rem;
+
+    flex-wrap: wrap;
+}
+
+
+/* ============================================================
+   PARKING SLOTS
+   ============================================================ */
+
+.slot {
+    width: 55px;
+
+    height: 75px;
+
+    border:
+        2px solid var(--olive-soft);
+
+    border-radius:
+        var(--radius-sm);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    cursor: pointer;
+
+    transition:
+        var(--transition);
+
+    background:
+        #343c20;
+
+    font-weight: 700;
+
+    font-size: 0.8rem;
+
+    color: var(--cream);
+}
+
+.slot.available {
+    border-color:
+        var(--success);
+
+    color: #a9d27d;
+
+    background:
+        rgba(127, 166, 80, 0.12);
+}
+
+.slot.available:hover {
+    background:
+        var(--success);
+
+    color: var(--white);
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        var(--shadow-md);
+}
+
+.slot.occupied {
+    background:
+        rgba(184, 74, 69, 0.15);
+
+    border-color:
+        var(--danger);
+
+    color: #e47770;
+
+    cursor: not-allowed;
+
+    opacity: 0.8;
+}
+
+.slot.selected {
+    background:
+        var(--burgundy);
+
+    border-color:
+        var(--gold);
+
+    color: var(--white);
+
+    transform:
+        scale(1.06);
+
+    box-shadow:
+        var(--shadow-md);
+}
+
+.slot.premium {
+    border-color:
+        var(--gold);
+
+    color:
+        var(--gold-light);
+
+    background:
+        rgba(212, 167, 44, 0.10);
+}
+
+.slot.premium.available:hover {
+    background:
+        var(--gold);
+
+    color:
+        var(--olive-dark);
+}
+
+
+/* ============================================================
+   DRIVING ROUTE
+   ============================================================ */
+
+.driving-route {
+    height: 30px;
+
+    width: 100%;
+
+    background-image:
+        linear-gradient(
+            to right,
+            rgba(244, 237, 218, 0.25) 50%,
+            transparent 50%
+        );
+
+    background-size:
+        40px 3px;
+
+    background-repeat:
+        repeat-x;
+
+    background-position:
+        center;
+
+    margin: 1rem 0;
+}
+
+
+/* ============================================================
+   FLASH MESSAGES
+   ============================================================ */
+
+.flash-messages {
+    max-width: 1200px;
+
+    margin: 1rem auto;
+
+    padding: 0 1.5rem;
+}
+
+.flash {
+    padding:
+        1rem 1.5rem;
+
+    border-radius:
+        var(--radius-sm);
+
+    margin-bottom:
+        0.75rem;
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    font-size: 0.9rem;
+
+    border-left:
+        5px solid;
+}
+
+.flash-success {
+    background:
+        rgba(127, 166, 80, 0.14);
+
+    border-left-color:
+        var(--success);
+
+    color:
+        #b5d68d;
+}
+
+.flash-danger {
+    background:
+        rgba(184, 74, 69, 0.14);
+
+    border-left-color:
+        var(--danger);
+
+    color:
+        #ed8c84;
+}
+
+.flash-warning {
+    background:
+        rgba(212, 167, 44, 0.14);
+
+    border-left-color:
+        var(--gold);
+
+    color:
+        var(--gold-light);
+}
+
+.flash-info {
+    background:
+        rgba(120, 151, 140, 0.14);
+
+    border-left-color:
+        var(--info);
+
+    color:
+        #b2cec4;
+}
+
+
+/* ============================================================
+   BADGES
+   ============================================================ */
+
+.badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    padding:
+        0.3rem 0.75rem;
+
+    border-radius: 20px;
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    font-size: 0.75rem;
+
+    font-weight: 700;
+}
+
+.badge-success {
+    background:
+        rgba(127, 166, 80, 0.16);
+
+    color:
+        #a9d27d;
+}
+
+.badge-danger {
+    background:
+        rgba(184, 74, 69, 0.16);
+
+    color:
+        #e47770;
+}
+
+.badge-warning {
+    background:
+        rgba(212, 167, 44, 0.16);
+
+    color:
+        var(--gold-light);
+}
+
+.badge-info {
+    background:
+        rgba(120, 151, 140, 0.16);
+
+    color:
+        #b2cec4;
+}
+
+
+/* ============================================================
+   INFO / REPORT
+   ============================================================ */
+
+.info-card {
+    border-top:
+        4px solid var(--gold);
+}
+
+.info-card:hover {
+    border-top-color:
+        var(--cream);
+}
+
+.report-card {
+    border-top:
+        4px solid var(--burgundy);
+}
+
+.report-card:hover {
+    border-top-color:
+        var(--gold);
+}
+
+
+/* ============================================================
+   SEARCH
+   ============================================================ */
+
+.search-box {
+    max-width: 700px;
+
+    margin:
+        0 auto 2rem;
+}
+
+.search-box form {
+    display: flex;
+
+    gap: 0.7rem;
+}
+
+.search-box input {
+    flex: 1;
+}
+
+
+/* ============================================================
+   MAP
+   ============================================================ */
+
+.map-container {
+    width: 100%;
+
+    min-height: 400px;
+
+    background:
+        #202615;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        var(--radius-md);
+
+    overflow: hidden;
+
+    box-shadow:
+        var(--shadow-md);
+}
+
+
+/* ============================================================
+   QR CODE
+   ============================================================ */
+
+.qr-container {
+    background:
+        var(--cream-light);
+
+    width: fit-content;
+
+    padding: 15px;
+
+    border-radius: 10px;
+
+    margin: 1rem auto;
+
+    box-shadow:
+        var(--shadow-lg);
+}
+
+.qr-container img {
+    display: block;
+
+    width: 220px;
+
+    height: 220px;
+}
+
+
+/* ============================================================
+   INVOICE
+   ============================================================ */
+
+.invoice-header {
+    border-bottom:
+        2px solid var(--gold);
+
+    padding-bottom: 1rem;
+
+    margin-bottom: 1.5rem;
+}
+
+.invoice-total {
+    color:
+        var(--gold-light);
+
+    font-size:
+        1.6rem;
+
+    font-weight:
+        900;
+}
+
+
+/* ============================================================
+   LOADING
+   ============================================================ */
+
+.spinner {
+    display: inline-block;
+
+    width: 20px;
+
+    height: 20px;
+
+    border:
+        3px solid rgba(244, 237, 218, 0.15);
+
+    border-radius: 50%;
+
+    border-top-color:
+        var(--gold);
+
+    animation:
+        spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+
+@keyframes fadeInUp {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.animate-fade-in-up {
+    animation:
+        fadeInUp 0.45s ease-out;
+}
+
+.animate-fade-in {
+    animation:
+        fadeIn 0.3s ease-out;
+}
+
+
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================ */
+
+.text-primary {
+    color:
+        var(--gold-light) !important;
+}
+
+.text-success {
+    color:
+        var(--success) !important;
+}
+
+.text-danger {
+    color:
+        #e47770 !important;
+}
+
+.text-warning {
+    color:
+        var(--gold-light) !important;
+}
+
+.text-muted {
+    color:
+        var(--text-muted) !important;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.text-white {
+    color:
+        var(--white) !important;
+}
+
+.d-flex {
+    display: flex !important;
+}
+
+.align-items-center {
+    align-items: center !important;
+}
+
+.justify-content-center {
+    justify-content: center !important;
+}
+
+.justify-content-between {
+    justify-content: space-between !important;
+}
+
+.w-100 {
+    width: 100% !important;
+}
+
+.gap-1 {
+    gap: 0.5rem;
+}
+
+.gap-2 {
+    gap: 1rem;
+}
+
+.gap-3 {
+    gap: 1.5rem;
+}
+
+.mt-1 { margin-top: 0.25rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-3 { margin-top: 1rem; }
+.mt-4 { margin-top: 1.5rem; }
+.mt-5 { margin-top: 3rem; }
+
+.mb-1 { margin-bottom: 0.25rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-3 { margin-bottom: 1rem; }
+.mb-4 { margin-bottom: 1.5rem; }
+.mb-5 { margin-bottom: 3rem; }
+
+.p-1 { padding: 0.25rem; }
+.p-2 { padding: 0.5rem; }
+.p-3 { padding: 1rem; }
+.p-4 { padding: 1.5rem; }
+.p-5 { padding: 3rem; }
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 768px) {
+
+    .nav-inner {
+        padding:
+            0 1rem;
+    }
+
+    .nav-toggle {
+        display: flex;
+    }
+
+    .nav-links {
+        display: none;
+
+        position: absolute;
+
+        top: 100%;
+
+        left: 0;
+
+        right: 0;
+
+        background:
+            #171b0e;
+
+        flex-direction: column;
+
+        padding: 1rem;
+
+        border-bottom:
+            3px solid var(--gold);
+
+        gap: 0.25rem;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-link {
+        width: 100%;
+
+        text-align: center;
+    }
+
+    .hero-section {
+        min-height: 65vh;
+
+        padding:
+            3rem 1rem;
+    }
+
+    .hero-title {
+        font-size:
+            2.3rem;
+    }
+
+    .locations-grid,
+    .steps-grid,
+    .stats-grid,
+    .settings-grid,
+    .report-grid,
+    .vehicles-grid,
+    .services-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+    .parking-lot-container {
+        padding: 1rem;
+
+        overflow-x: auto;
+    }
+
+    .brutalist-table {
+        min-width:
+            650px;
+    }
+
+    .search-box form {
+        flex-direction:
+            column;
+    }
+}
+
+
+/* ============================================================
+   SMALL MOBILE
+   ============================================================ */
+
+@media (max-width: 480px) {
+
+    .container {
+        padding-left:
+            0.8rem;
+
+        padding-right:
+            0.8rem;
+    }
+
+    .hero-title {
+        font-size:
+            2rem;
+    }
+
+    .section-title {
+        font-size:
+            1.5rem;
+    }
+
+    .location-card,
+    .step-card,
+    .stat-box,
+    .auth-card,
+    .info-card,
+    .vehicle-card,
+    .service-card,
+    .report-card,
+    .invoice-card,
+    .booking-summary,
+    .booking-card {
+        padding:
+            1rem;
+    }
+
+    .slot {
+        width:
+            48px;
+
+        height:
+            68px;
+    }
+
+    .qr-container img {
+        width:
+            180px;
+
+        height:
+            180px;
+    }
+
+    footer .footer-links,
+    .site-footer .footer-links {
+        flex-direction:
+            column;
+
+        gap:
+            0.8rem;
+    }
+}
+
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+
+@media print {
+
+    body {
+        background:
+            white !important;
+
+        color:
+            black !important;
+    }
+
+    .brutalist-nav,
+    footer,
+    .site-footer,
+    .no-print {
+        display:
+            none !important;
+    }
+
+    .invoice-card {
+        box-shadow:
+            none !important;
+
+        border:
+            1px solid #ddd !important;
+
+        color:
+            black !important;
+    }
+}
+/* ================= WELCOME MESSAGE CLOSE X ================= */
+
+.flash {
+    position: relative;
+    padding-right: 45px;
+}
+
+.flash .btn-close,
+.flash button,
+.alert .btn-close {
+    color: #ff0000 !important;
+    background: none !important;
+    opacity: 1 !important;
+
+    font-size: 1.5rem;
+    font-weight: 900;
+
+    width: 30px;
+    height: 30px;
+
+    position: absolute;
+    right: 12px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    border: none !important;
+    cursor: pointer;
+
+    text-shadow: none !important;
+}
+
+/* RED CLOSE X BUTTON */
+.flash-close {
+    color: #f70707 !important;
+    background: transparent !important;
+    border: none !important;
+
+    font-size: 28px !important;
+    font-weight: 900 !important;
+
+    line-height: 1;
+    cursor: pointer;
+
+    padding: 0;
+    margin: 0;
+}
+
+.flash-close:hover {
+    color: #0cd348 !important;
+    transform: scale(1.15);
+}
+/* =========================================================
+   BOOK NOW - GLASSMORPHISM
+   ========================================================= */
+
+.location-card a {
+    display: inline-block;
+    padding: 12px 24px;
+
+    color: var(--cream) !important;
+    text-decoration: none;
+
+    /* Glass */
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 12px;
+
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.30),
+        inset 0 1px 0 rgba(255, 255, 255, 0.18);
+
+    font-weight: 700;
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+
+/* HOVER */
+
+.location-card a:hover {
+
+    color: #ffffff !important;
+
+    background: rgba(255, 255, 255, 0.15);
+
+    border-color: rgba(212, 175, 55, 0.75);
+
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 14px 35px rgba(0, 0, 0, 0.40),
+        0 0 20px rgba(212, 175, 55, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.30);
+}
+
+
+/* CLICK */
+
+.location-card a:active {
+
+    transform: scale(0.92);
+
+    background: rgba(255, 255, 255, 0.22);
+
+    border-color: #d4af37;
+
+    box-shadow:
+        inset 0 3px 10px rgba(0, 0, 0, 0.35),
+        0 0 25px rgba(212, 175, 55, 0.35);
+
+    transition: 0.08s;
+}
+
+
+/* =========================================================
+   BOOKING PAGE GLASS EFFECT
+   ========================================================= */
+
+.booking-glass {
+
+    background: rgba(255, 255, 255, 0.08);
+
+    border: 1px solid rgba(255, 255, 255, 0.20);
+
+    border-radius: 18px;
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+
+    transition: all 0.35s ease;
+}
+
+
+.booking-glass:hover {
+
+    background: rgba(255, 255, 255, 0.11);
+
+    border-color: rgba(212, 175, 55, 0.45);
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 20px 45px rgba(0, 0, 0, 0.45),
+        0 0 25px rgba(212, 175, 55, 0.12);
+}
+
+
+/* =========================================================
+   BOOKING INPUTS
+   ========================================================= */
+
+.booking-glass input,
+.booking-glass select,
+.booking-glass textarea {
+
+    background: rgba(255, 255, 255, 0.08) !important;
+
+    color: var(--cream) !important;
+
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+
+    border-radius: 10px;
+
+    backdrop-filter: blur(10px);
+
+    transition: all 0.25s ease;
+}
+
+
+.booking-glass input:focus,
+.booking-glass select:focus,
+.booking-glass textarea:focus {
+
+    background: rgba(255, 255, 255, 0.13) !important;
+
+    border-color: #d4af37 !important;
+
+    box-shadow:
+        0 0 0 3px rgba(212, 175, 55, 0.15),
+        0 0 15px rgba(212, 175, 55, 0.15);
+
+    outline: none;
+}
+
+
+/* =========================================================
+   SELECTED PARKING SLOT
+   ========================================================= */
+
+.slot.selected {
+
+    background: rgba(212, 175, 55, 0.25) !important;
+
+    border: 2px solid #d4af37 !important;
+
+    backdrop-filter: blur(15px);
+
+    box-shadow:
+        0 0 20px rgba(212, 175, 55, 0.30),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+
+    transform: scale(1.05);
+}
+
+
+/* =========================================================
+   BOOKING BUTTON
+   ========================================================= */
+
+.booking-glass .brutalist-btn,
+.booking-glass button {
+
+    background: rgba(212, 175, 55, 0.18);
+
+    color: #fff8dc;
+
+    border: 1px solid rgba(212, 175, 55, 0.65);
+
+    border-radius: 12px;
+
+    backdrop-filter: blur(12px);
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+
+    transition: all 0.25s ease;
+}
+
+
+.booking-glass .brutalist-btn:hover,
+.booking-glass button:hover {
+
+    background: rgba(212, 175, 55, 0.30);
+
+    border-color: #d4af37;
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.35),
+        0 0 20px rgba(212, 175, 55, 0.25);
+}
+
+
+.booking-glass .brutalist-btn:active,
+.booking-glass button:active {
+
+    transform: scale(0.94);
+
+}
+/* ============================================================
+   END OF CSS
+   ============================================================ */
+/* ==========================================================
+   DIGITAL PARKING PASS
+   ========================================================== */
+
+.parking-pass-page {
+    min-height: 100vh;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.parking-pass-card {
+    width: 100%;
+    max-width: 800px;
+    padding: 30px;
+
+    background: rgba(255, 255, 255, 0.07);
+
+    border: 1px solid rgba(255, 255, 255, 0.25);
+
+    border-radius: 20px;
+
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.40),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+
+/* HEADER */
+
+.pass-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.pass-label {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    opacity: 0.7;
+}
+
+.pass-header h1 {
+    margin: 8px 0 0;
+    font-size: 32px;
+    font-weight: 900;
+}
+
+
+/* STATUS */
+
+.pass-status {
+    padding: 10px 16px;
+
+    border: 1px solid #d4af37;
+
+    border-radius: 10px;
+
+    color: #d4af37;
+
+    font-weight: 800;
+
+    white-space: nowrap;
+}
+
+
+/* DIVIDER */
+
+.pass-divider {
+    height: 1px;
+
+    background: rgba(255, 255, 255, 0.20);
+
+    margin: 25px 0;
+}
+
+
+/* BOOKING REFERENCE */
+
+.booking-reference {
+    text-align: center;
+
+    padding: 20px;
+
+    border-radius: 14px;
+
+    background: rgba(0, 0, 0, 0.20);
+
+    margin-bottom: 25px;
+}
+
+.booking-reference span {
+    display: block;
+
+    font-size: 12px;
+
+    letter-spacing: 2px;
+
+    opacity: 0.65;
+
+    margin-bottom: 8px;
+}
+
+.booking-reference strong {
+    font-size: 24px;
+
+    letter-spacing: 2px;
+}
+
+
+/* DETAILS */
+
+.pass-details {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 15px;
+}
+
+.pass-detail {
+    padding: 16px;
+
+    border-radius: 12px;
+
+    background: rgba(255, 255, 255, 0.06);
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.pass-detail span {
+    display: block;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    opacity: 0.60;
+
+    margin-bottom: 7px;
+
+    letter-spacing: 1px;
+}
+
+.pass-detail strong {
+    font-size: 16px;
+}
+
+
+/* AMOUNT */
+
+.pass-amount {
+    margin-top: 20px;
+
+    padding: 20px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    border-radius: 14px;
+
+    background: rgba(212, 175, 55, 0.10);
+
+    border: 1px solid rgba(212, 175, 55, 0.35);
+}
+
+.pass-amount span {
+    font-weight: 700;
+}
+
+.pass-amount strong {
+    font-size: 26px;
+
+    color: #d4af37;
+}
+
+
+/* QR */
+
+.pass-qr-section {
+    text-align: center;
+
+    margin-top: 30px;
+
+    padding: 25px;
+
+    border-radius: 16px;
+
+    background: rgba(255, 255, 255, 0.05);
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.pass-qr-section h2 {
+    font-size: 18px;
+
+    margin-bottom: 20px;
+
+    font-weight: 800;
+}
+
+.pass-qr {
+    width: 240px;
+
+    height: 240px;
+
+    padding: 12px;
+
+    background: white;
+
+    border-radius: 14px;
+}
+
+.pass-qr-section p {
+    margin-top: 15px;
+
+    opacity: 0.65;
+}
+
+
+/* INSTRUCTIONS */
+
+.pass-instructions {
+    margin-top: 25px;
+
+    padding: 20px;
+
+    border-radius: 14px;
+
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.pass-instructions h3 {
+    font-size: 16px;
+
+    margin-bottom: 12px;
+}
+
+.pass-instructions ul {
+    margin: 0;
+
+    padding-left: 20px;
+}
+
+.pass-instructions li {
+    margin-bottom: 7px;
+
+    opacity: 0.75;
+}
+
+
+/* BUTTONS */
+
+.pass-actions {
+    display: flex;
+
+    gap: 15px;
+
+    margin-top: 25px;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .parking-pass-page {
+        padding: 20px 10px;
+    }
+
+    .parking-pass-card {
+        padding: 20px;
+    }
+
+    .pass-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .pass-header h1 {
+        font-size: 25px;
+    }
+
+    .pass-details {
+        grid-template-columns: 1fr;
+    }
+
+    .pass-amount {
+        flex-direction: column;
+
+        gap: 8px;
+    }
+
+    .pass-qr {
+        width: 210px;
+
+        height: 210px;
+    }
+
+}
+
+
+/* PRINT */
+
+@media print {
+
+    body {
+        background: white !important;
+
+        color: black !important;
+    }
+
+    .brutalist-nav,
+    .site-footer,
+    .pass-actions {
+        display: none !important;
+    }
+
+    .parking-pass-page {
+        padding: 0;
+    }
+
+    .parking-pass-card {
+        max-width: 100%;
+
+        box-shadow: none;
+
+        border: 2px solid #000;
+
+        background: white !important;
+
+        color: black !important;
+    }
+
+}
+/* =========================================================
+   STRONG GLASS EFFECT - DIGITAL PARKING PASS
+   ========================================================= */
+
+.parking-pass-page {
+    position: relative;
+    min-height: 100vh;
+    padding: 50px 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(212, 175, 55, 0.22),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 85% 25%,
+            rgba(130, 160, 70, 0.20),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 50% 100%,
+            rgba(80, 110, 40, 0.20),
+            transparent 35%
+        ),
+        #10150b;
+}
+
+
+/* BACKGROUND GLASS LIGHT */
+.parking-pass-page::before {
+    content: "";
+    position: absolute;
+
+    width: 450px;
+    height: 450px;
+
+    left: 5%;
+    top: 10%;
+
+    background: rgba(212, 175, 55, 0.15);
+
+    border-radius: 50%;
+
+    filter: blur(80px);
+
+    pointer-events: none;
+}
+
+
+/* SECOND BACKGROUND LIGHT */
+.parking-pass-page::after {
+    content: "";
+    position: absolute;
+
+    width: 500px;
+    height: 500px;
+
+    right: 5%;
+    bottom: 5%;
+
+    background: rgba(120, 150, 60, 0.16);
+
+    border-radius: 50%;
+
+    filter: blur(90px);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   MAIN GLASS CARD
+   ========================================================= */
+
+.parking-pass-card {
+    position: relative;
+    z-index: 2;
+
+    width: 100%;
+    max-width: 800px;
+
+    padding: 32px;
+
+    /* IMPORTANT */
+    background: rgba(255, 255, 255, 0.08) !important;
+
+    /* REAL GLASS */
+    backdrop-filter: blur(30px) saturate(140%) !important;
+    -webkit-backdrop-filter: blur(30px) saturate(140%) !important;
+
+    /* GLASS BORDER */
+    border: 1px solid rgba(255, 255, 255, 0.28) !important;
+
+    border-radius: 24px;
+
+    /* GLASS SHADOW */
+    box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.30),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+
+    overflow: hidden;
+}
+
+
+/* TOP GLASS REFLECTION */
+.parking-pass-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 45%;
+
+    background: linear-gradient(
+        180deg,
+        rgba(255,255,255,0.13),
+        rgba(255,255,255,0.03),
+        transparent
+    );
+
+    pointer-events: none;
+
+    z-index: -1;
+}
+
+
+/* =========================================================
+   BOOKING REFERENCE GLASS
+   ========================================================= */
+
+.booking-reference {
+    background: rgba(0, 0, 0, 0.18) !important;
+
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+
+    border: 1px solid rgba(255,255,255,0.18) !important;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.14),
+        0 10px 30px rgba(0,0,0,0.20);
+
+    border-radius: 16px;
+}
+
+
+/* =========================================================
+   DETAIL GLASS BOXES
+   ========================================================= */
+
+.pass-detail {
+    background: rgba(255,255,255,0.09) !important;
+
+    backdrop-filter: blur(20px) saturate(130%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(130%) !important;
+
+    border: 1px solid rgba(255,255,255,0.22) !important;
+
+    border-radius: 16px;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.14),
+        inset 0 -1px 0 rgba(255,255,255,0.04),
+        0 12px 30px rgba(0,0,0,0.20);
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+/* HOVER */
+.pass-detail:hover {
+    transform: translateY(-5px) !important;
+
+    background: rgba(255,255,255,0.15) !important;
+
+    border-color: rgba(212,175,55,0.50) !important;
+
+    box-shadow:
+        0 18px 40px rgba(0,0,0,0.30),
+        inset 0 1px 0 rgba(255,255,255,0.20);
+}
+
+
+/* =========================================================
+   TOTAL AMOUNT GLASS
+   ========================================================= */
+
+.pass-amount {
+    background: rgba(212,175,55,0.11) !important;
+
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+
+    border: 1px solid rgba(212,175,55,0.50) !important;
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,0.25),
+        inset 0 1px 0 rgba(255,255,255,0.15);
+
+    border-radius: 16px;
+}
+
+
+/* =========================================================
+   QR GLASS
+   ========================================================= */
+
+.pass-qr-section {
+    background: rgba(255,255,255,0.08) !important;
+
+    backdrop-filter: blur(22px) !important;
+    -webkit-backdrop-filter: blur(22px) !important;
+
+    border: 1px solid rgba(255,255,255,0.22) !important;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,0.25),
+        inset 0 1px 0 rgba(255,255,255,0.14);
+
+    border-radius: 18px;
+}
+
+
+/* =========================================================
+   CONFIRMED BADGE
+   ========================================================= */
+
+.pass-status {
+    background: rgba(212,175,55,0.12) !important;
+
+    backdrop-filter: blur(15px) !important;
+    -webkit-backdrop-filter: blur(15px) !important;
+
+    border: 1px solid rgba(212,175,55,0.65) !important;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,0.20),
+        inset 0 1px 0 rgba(255,255,255,0.18);
+}
+
+
+/* =========================================================
+   INSTRUCTIONS GLASS
+   ========================================================= */
+
+.pass-instructions {
+    background: rgba(255,255,255,0.07) !important;
+
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+
+    border: 1px solid rgba(255,255,255,0.18) !important;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.12),
+        0 10px 30px rgba(0,0,0,0.20);
+
+    border-radius: 16px;
+}

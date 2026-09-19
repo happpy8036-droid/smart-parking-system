@@ -1,0 +1,42 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Search Parking{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 1200px; margin: 0 auto; padding: 2rem 1rem;">
+    <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 1.5rem;">SEARCH PARKING</h1>
+
+    <form method="GET" action="/user/search" style="margin-bottom: 2rem;">
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <input type="text" name="q" value="{{ query or '' }}" placeholder="Enter location or area..." style="flex: 1; min-width: 250px; padding: 0.75rem 1rem; background: rgba(255,255,255,0.08); border: 2px solid rgba(255,255,255,0.15); border-radius: 8px; color: #fff; font-size: 1rem;" onfocus="this.style.borderColor='#10B981'" onblur="this.style.borderColor='rgba(255,255,255,0.15)'">
+            <button type="submit" class="brutalist-btn">SEARCH →</button>
+        </div>
+    </form>
+
+    {% if results %}
+    <p style="font-size: 0.9rem; opacity: 0.6; margin-bottom: 1rem;">{{ results|length }} location(s) found</p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1.5rem;">
+        {% for area in results %}
+        <div class="location-card" style="padding: 1.5rem;">
+            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">{{ area.name }}</h3>
+            <p style="font-size: 0.85rem; opacity: 0.7; margin: 0 0 1rem 0;">{{ area.address }}, {{ area.city }}</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <span style="font-size: 0.9rem; font-weight: 600;">{{ area.available_slots }}/{{ area.total_slots }} Free</span>
+                <span style="font-size: 1.1rem; font-weight: 700; color: #10B981;">₹{{ "%.0f"|format(area.price_per_hour) }}/hr</span>
+            </div>
+<a href="{{ url_for('user.parking_details', area_id=area.id) }}"
+   class="brutalist-btn"
+   style="width: 100%; text-align: center; display: block; text-decoration: none;">
+    BOOK NOW →
+</a>        </div>
+        {% endfor %}
+    </div>
+    {% elif query %}
+    <div style="text-align: center; padding: 4rem; opacity: 0.6;">
+        <p style="font-size: 3rem;">🔍</p>
+        <p style="font-size: 1.25rem; font-weight: 600;">No Results Found</p>
+        <p style="font-size: 0.9rem;">Try a different search term.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

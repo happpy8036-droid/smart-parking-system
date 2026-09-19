@@ -1,0 +1,98 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Add Vehicle{% endblock %}
+
+{% block content %}
+
+<div class="container"
+     style="
+        max-width:550px;
+        margin:0 auto;
+        padding:2rem 1rem;
+     ">
+
+    <div class="info-card booking-glass"
+         style="padding:30px;">
+
+        <h1 style="
+            font-size:2rem;
+            font-weight:800;
+            margin-bottom:25px;
+        ">
+            ADD VEHICLE
+        </h1>
+
+        <form method="POST">
+
+            <div class="form-group">
+                <label>Vehicle Number</label>
+
+                <input
+                    type="text"
+                    name="vehicle_number"
+                    class="brutalist-input"
+                    placeholder="AP05AB1234"
+                    required
+                    style="text-transform:uppercase;"
+                >
+            </div>
+
+
+            <div class="form-group">
+                <label>Vehicle Type</label>
+
+                <select
+                    name="vehicle_type"
+                    class="brutalist-input"
+                    required>
+
+                    <option value="car">Car</option>
+                    <option value="bike">Bike</option>
+                    <option value="suv">SUV</option>
+                    <option value="truck">Truck</option>
+                    <option value="ev">Electric Vehicle</option>
+
+                </select>
+            </div>
+
+
+            <div class="form-group">
+                <label>Brand</label>
+
+                <input
+                    type="text"
+                    name="brand"
+                    class="brutalist-input"
+                    placeholder="Maruti Suzuki"
+                >
+            </div>
+
+
+            <div class="form-group">
+                <label>Color</label>
+
+                <input
+                    type="text"
+                    name="color"
+                    class="brutalist-input"
+                    placeholder="White"
+                >
+            </div>
+
+
+            <button
+                type="submit"
+                class="brutalist-btn"
+                style="width:100%;">
+
+                ADD VEHICLE
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

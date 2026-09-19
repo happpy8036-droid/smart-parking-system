@@ -1,0 +1,41 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Smart Parking — Book Your Spot{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section style="min-height: 80vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 2rem;">
+    <div style="max-width: 600px;">
+        <h1 style="font-size: 3.5rem; font-weight: 800; line-height: 1.1; margin-bottom: 1rem;">
+            BOOK YOUR<br><span style="color: #10B981;">PARKING SLOT NOW</span>
+        </h1>
+        <p style="font-size: 1.1rem; opacity: 0.8; margin-bottom: 2rem;">Real time availability. Instant booking. Zero hassle.</p>
+        
+        <form action="/login" method="GET" style="display: flex; gap: 1rem; max-width: 400px; margin: 0 auto;">
+            <input type="text" name="q" placeholder="Enter location..." style="flex: 1; padding: 0.75rem 1rem; background: rgba(255,255,255,0.08); border: 2px solid rgba(255,255,255,0.15); border-radius: 8px; color: #fff; font-size: 1rem;" onfocus="this.style.borderColor='#10B981'" onblur="this.style.borderColor='rgba(255,255,255,0.15)'">
+            <button type="submit" class="brutalist-btn" style="white-space: nowrap;">🚗 Find Spot</button>
+        </form>
+    </div>
+</section>
+
+<!-- Featured Locations -->
+<section style="padding: 2rem; max-width: 1200px; margin: 0 auto;">
+    <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 1.5rem;">FEATURED LOCATIONS</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
+        {% for area in areas %}
+        <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.5rem; transition: all 0.3s ease; cursor: pointer;" 
+             onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 30px rgba(16,185,129,0.2)'"
+             onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'"
+             onclick="window.location='/user/parking/{{ area.id }}'">
+            <h3 style="font-size: 1.25rem; font-weight: 700; margin: 0 0 0.5rem;">{{ area.name }}</h3>
+            <p style="font-size: 0.85rem; opacity: 0.7; margin: 0 0 1rem;">{{ area.city }} — {{ area.area }}</p>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 0.85rem; opacity: 0.8;">{{ area.available_slots }} SLOTS | {{ area.available_slots }} FREE</span>
+                <span style="color: #10B981; font-weight: 700;">₹{{ area.price_per_hour|int }}/HR</span>
+            </div>
+            <div style="margin-top: 0.75rem; color: #10B981; font-size: 0.85rem; font-weight: 600;">BOOK NOW →</div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

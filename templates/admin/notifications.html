@@ -1,0 +1,28 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Notifications — Admin{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 1200px; margin: 0 auto; padding: 2rem 1rem;">
+    <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 2rem;">NOTIFICATIONS</h1>
+
+    {% if notifications %}
+    <div style="display: grid; gap: 0.75rem;">
+        {% for n in notifications %}
+        <div style="display: flex; align-items: flex-start; gap: 1rem; padding: 1rem 1.25rem; background: rgba(255,255,255,0.05); border-radius: 8px; {% if not n.is_read %}border-left: 3px solid #10B981;{% endif %}">
+            <span style="font-size: 1.5rem;">🔔</span>
+            <div style="flex: 1;">
+                <p style="margin: 0; font-size: 0.95rem;">{{ n.message }}</p>
+                <span style="font-size: 0.75rem; opacity: 0.5;">{{ n.created_at.strftime('%d %b %Y, %I:%M %p') if n.created_at else 'N/A' }}</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div style="text-align: center; padding: 4rem; opacity: 0.6;">
+        <p style="font-size: 3rem;">🔔</p>
+        <p style="font-size: 1.25rem; font-weight: 600;">No Notifications</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Booking Details{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 600px; margin: 0 auto; padding: 2rem 1rem;">
+    <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 2rem;">BOOKING #{{ booking.id }}</h1>
+
+    <div class="info-card" style="padding: 1.5rem; margin-bottom: 1.5rem;">
+        <div style="display: grid; gap: 1rem;">
+            <div style="display: flex; justify-content: space-between; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                <span style="opacity: 0.6;">Location</span>
+                <span style="font-weight: 600;">{{ booking.parking_area.name if booking.parking_area else 'N/A' }}</span>
+            </div>
+           <div style="text-align: center; margin: 25px 0;">
+
+    <h2>BOOKING QR CODE</h2>
+
+    <img
+        src="{{ url_for('user.booking_qr', booking_id=booking.id) }}"
+        alt="Booking QR Code"
+        width="220"
+        height="220"
+        style="
+            display: block;
+            margin: 15px auto;
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+        "
+    >
+
+    <p>Scan to verify booking</p>
+</div>
+            <div style="display: flex; justify-content: space-between; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                <span style="opacity: 0.6;">Slot</span>
+                <span style="font-weight: 600;">{{ booking.slot.slot_number if booking.slot else 'N/A' }}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                <span style="opacity: 0.6;">Date</span>
+               <span style="font-weight: 600;">{{ booking.booking_date if booking.booking_date else 'N/A' }}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                <span style="opacity: 0.6;">Duration</span>
+                <span style="font-weight: 600;">{{ booking.hours }} hour(s)</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                <span style="opacity: 0.6;">Amount</span>
+                <span style="font-weight: 700; color: #10B981;">₹{{ "%.2f"|format(booking.total_amount) }}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+                <span style="opacity: 0.6;">Status</span>
+                <span style="padding: 0.2rem 0.6rem; border-radius: 100px; font-size: 0.75rem; font-weight: 600;
+                    {% if booking.status == 'confirmed' %}background: rgba(16,185,129,0.15); color: #10B981;
+                    {% elif booking.status == 'cancelled' %}background: rgba(239,68,68,0.15); color: #EF4444;
+                    {% else %}background: rgba(251,191,36,0.15); color: #FBBF24;{% endif %}
+                ">{{ booking.status|upper }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div style="display: flex; gap: 1rem;">
+        {% if booking.status == 'confirmed' %}
+<form method="POST"
+      action="{{ url_for('user.cancel_booking', booking_id=booking.id) }}"
+      style="display: inline;"
+      onsubmit="return confirm('Are you sure?')">
+
+    <button type="submit" class="brutalist-btn btn-danger">
+        CANCEL BOOKING
+    </button>
+
+</form>        {% endif %}
+        <a href="/user/booking-history" class="brutalist-btn btn-secondary">← BACK</a>
+    </div>
+</div>
+{% endblock %}

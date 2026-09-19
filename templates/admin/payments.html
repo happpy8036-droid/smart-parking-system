@@ -1,0 +1,49 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Payments — Admin{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 1200px; margin: 0 auto; padding: 2rem 1rem;">
+    <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 2rem;">PAYMENTS</h1>
+
+    {% if payments %}
+    <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr style="text-align: left; border-bottom: 2px solid rgba(255,255,255,0.1);">
+                    <th style="padding: 0.75rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6;">ID</th>
+                    <th style="padding: 0.75rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6;">BOOKING</th>
+                    <th style="padding: 0.75rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6;">AMOUNT</th>
+                    <th style="padding: 0.75rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6;">METHOD</th>
+                    <th style="padding: 0.75rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6;">STATUS</th>
+                    <th style="padding: 0.75rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6;">DATE</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in payments %}
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <td style="padding: 0.75rem;">{{ p.id }}</td>
+                    <td style="padding: 0.75rem;">{{ p.booking_id }}</td>
+                    <td style="padding: 0.75rem; font-weight: 600;">₹{{ "%.2f"|format(p.amount) }}</td>
+                    <td style="padding: 0.75rem;">{{ p.payment_method|replace('_', ' ')|title if p.payment_method else 'N/A' }}</td>
+                    <td style="padding: 0.75rem;">
+                        <span style="padding: 0.2rem 0.6rem; border-radius: 100px; font-size: 0.7rem; font-weight: 600;
+                            {% if p.status == 'completed' %}background: rgba(16,185,129,0.15); color: #10B981;
+                            {% elif p.status == 'failed' %}background: rgba(239,68,68,0.15); color: #EF4444;
+                            {% else %}background: rgba(251,191,36,0.15); color: #FBBF24;{% endif %}
+                        ">{{ p.status|upper }}</span>
+                    </td>
+                    <td style="padding: 0.75rem;">{{ p.created_at.strftime('%d %b %Y, %I:%M %p') if p.created_at else 'N/A' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div style="text-align: center; padding: 4rem; opacity: 0.6;">
+        <p style="font-size: 3rem;">💳</p>
+        <p style="font-size: 1.25rem; font-weight: 600;">No Payments Yet</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

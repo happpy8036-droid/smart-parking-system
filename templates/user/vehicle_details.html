@@ -1,0 +1,34 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Vehicle Details{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 500px; margin: 0 auto; padding: 2rem 1rem;">
+    <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 2rem;">VEHICLE DETAILS</h1>
+
+    <div class="info-card" style="padding: 1.5rem; margin-bottom: 1.5rem;">
+        <div style="display: grid; gap: 1rem;">
+            <div style="display: flex; justify-content: space-between; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                <span style="opacity: 0.6;">Number</span>
+                <span style="font-weight: 600;">{{ vehicle.vehicle_number }}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                <span style="opacity: 0.6;">Type</span>
+                <span style="font-weight: 600;">{{ vehicle.vehicle_type|title }}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                <span style="opacity: 0.6;">Brand</span>
+                <span style="font-weight: 600;">{{ vehicle.brand or 'N/A' }}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+                <span style="opacity: 0.6;">Color</span>
+                <span style="font-weight: 600;">{{ vehicle.color or 'N/A' }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div style="display: flex; gap: 1rem;">
+        <a href="/user/vehicles" class="brutalist-btn btn-secondary">← BACK TO VEHICLES</a>
+    </div>
+</div>
+{% endblock %}

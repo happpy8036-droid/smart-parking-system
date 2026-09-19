@@ -1,0 +1,211 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Digital Parking Pass{% endblock %}
+
+{% block content %}
+
+<div class="parking-pass-page">
+
+    <div class="parking-pass-card">
+
+        <!-- HEADER -->
+        <div class="pass-header">
+
+            <div>
+                <div class="pass-label">
+                    SMART PARKING SYSTEM
+                </div>
+
+                <h1>DIGITAL PARKING PASS</h1>
+            </div>
+
+            <div class="pass-status">
+                ✓ CONFIRMED
+            </div>
+
+        </div>
+
+
+        <!-- DIVIDER -->
+        <div class="pass-divider"></div>
+
+
+        <!-- BOOKING REFERENCE -->
+        <div class="booking-reference">
+
+            <span>BOOKING REFERENCE</span>
+
+            <strong>
+                {{ booking.booking_ref }}
+            </strong>
+
+        </div>
+
+
+        <!-- BOOKING DETAILS -->
+        <div class="pass-details">
+
+            <div class="pass-detail">
+                <span>📍 PARKING LOCATION</span>
+
+                <strong>
+                    {{ area.name if area else 'N/A' }}
+                </strong>
+            </div>
+
+
+            <div class="pass-detail">
+                <span>🅿️ PARKING SLOT</span>
+
+                <strong>
+                    {{ slot.slot_number if slot else 'N/A' }}
+                </strong>
+            </div>
+
+
+            <div class="pass-detail">
+                <span>📅 BOOKING DATE</span>
+
+                <strong>
+                    {{ booking.booking_date }}
+                </strong>
+            </div>
+
+
+            <div class="pass-detail">
+                <span>⏰ START TIME</span>
+
+                <strong>
+                    {{ booking.start_time }}
+                </strong>
+            </div>
+
+
+            <div class="pass-detail">
+                <span>⏰ END TIME</span>
+
+                <strong>
+                    {{ booking.end_time }}
+                </strong>
+            </div>
+
+
+            <div class="pass-detail">
+                <span>⌛ DURATION</span>
+
+                <strong>
+                    {{ booking.duration }} minutes
+                </strong>
+            </div>
+
+
+            {% if vehicle %}
+
+            <div class="pass-detail">
+                <span>🚗 VEHICLE NUMBER</span>
+
+                <strong>
+                    {{ vehicle.vehicle_number }}
+                </strong>
+            </div>
+
+
+            <div class="pass-detail">
+                <span>🚙 VEHICLE TYPE</span>
+
+                <strong>
+                    {{ vehicle.vehicle_type|title }}
+                </strong>
+            </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- TOTAL AMOUNT -->
+        <div class="pass-amount">
+
+            <span>TOTAL AMOUNT</span>
+
+            <strong>
+                ₹{{ "%.2f"|format(booking.total_amount) }}
+            </strong>
+
+        </div>
+
+
+        <!-- QR CODE -->
+        <div class="pass-qr-section">
+
+            <h2>
+                SCAN AT PARKING ENTRY
+            </h2>
+
+            <img
+                src="{{ url_for('user.booking_qr', booking_id=booking.id) }}"
+                alt="Parking QR Code"
+                class="pass-qr"
+            >
+
+            <p>
+                Show this QR code at the parking entrance.
+            </p>
+
+        </div>
+
+
+        <!-- IMPORTANT INSTRUCTIONS -->
+        <div class="pass-instructions">
+
+            <h3>IMPORTANT</h3>
+
+            <ul>
+
+                <li>
+                    Show this digital pass at parking entry.
+                </li>
+
+                <li>
+                    Park only in your assigned slot.
+                </li>
+
+                <li>
+                    Do not share your QR code with others.
+                </li>
+
+                <li>
+                    Exit before your booking end time.
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <!-- BUTTONS -->
+        <div class="pass-actions">
+
+            <button
+                type="button"
+                onclick="window.print()"
+                class="brutalist-btn"
+            >
+                🖨️ PRINT PASS
+            </button>
+
+
+            <a
+                href="{{ url_for('user.booking_details', booking_id=booking.id) }}"
+                class="brutalist-btn"
+            >
+                VIEW BOOKING
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

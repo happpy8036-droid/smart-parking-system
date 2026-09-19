@@ -1,0 +1,19 @@
+{% extends 'layouts/base.html' %}
+{% block title %}Add Parking — Admin{% endblock %}
+{% block content %}
+<section class="page-section">
+    <div class="container">
+        <h1 class="page-title">ADD PARKING LOCATION</h1>
+        <div class="red-line"></div>
+        <form method="POST" action="/admin/add-parking" class="admin-form">
+            <div class="form-group"><label>NAME</label><input type="text" name="name" class="brutalist-input" required></div>
+            <div class="form-group"><label>ADDRESS</label><input type="text" name="address" class="brutalist-input" required></div>
+            <div class="form-group"><label>CITY</label><input type="text" name="city" class="brutalist-input" required></div>
+            <div class="form-group"><label>AREA</label><input type="text" name="area" class="brutalist-input"></div>
+            <div class="form-group"><label>PRICE PER HOUR (₹)</label><input type="number" name="price_per_hour" class="brutalist-input" value="50" required></div>
+            <div class="form-group"><label>DESCRIPTION</label><textarea name="description" class="brutalist-input" rows="3"></textarea></div>
+            <button type="submit" class="brutalist-btn">ADD LOCATION &rarr;</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

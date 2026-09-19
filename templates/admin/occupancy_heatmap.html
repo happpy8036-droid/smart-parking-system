@@ -1,0 +1,733 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}
+Parking Occupancy Heatmap
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container-fluid py-5">
+
+    <!-- ==========================================
+         HEADER
+         ========================================== -->
+
+    <div class="heatmap-header">
+
+        <div>
+
+            <h1 class="heatmap-title">
+                PARKING OCCUPANCY HEATMAP
+            </h1>
+
+            <p class="heatmap-subtitle">
+                Analyze parking demand by location and time.
+            </p>
+
+        </div>
+
+
+        <!-- DATE FILTER -->
+
+        <form method="GET" class="date-filter">
+
+            <label>
+                SELECT DATE
+            </label>
+
+            <input
+                type="date"
+                name="date"
+                value="{{ selected_date }}"
+                onchange="this.form.submit()"
+            >
+
+        </form>
+
+    </div>
+
+
+    <!-- ==========================================
+         SUMMARY CARDS
+         ========================================== -->
+
+    <div class="heatmap-summary">
+
+        <div class="heatmap-stat">
+
+            <span>
+                PARKING LOCATIONS
+            </span>
+
+            <strong>
+                {{ heatmap_data|length }}
+            </strong>
+
+        </div>
+
+
+        <div class="heatmap-stat">
+
+            <span>
+                ANALYSIS HOURS
+            </span>
+
+            <strong>
+                {{ hours|length }}
+            </strong>
+
+        </div>
+
+
+        <div class="heatmap-stat">
+
+            <span>
+                DATE
+            </span>
+
+            <strong>
+                {{ selected_date }}
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==========================================
+         LEGEND
+         ========================================== -->
+
+    <div class="heatmap-legend">
+
+        <span class="legend-title">
+            OCCUPANCY LEVEL
+        </span>
+
+        <span>
+            <i class="legend-box low"></i>
+            Low &lt; 30%
+        </span>
+
+        <span>
+            <i class="legend-box medium"></i>
+            Medium 30-59%
+        </span>
+
+        <span>
+            <i class="legend-box high"></i>
+            High 60-79%
+        </span>
+
+        <span>
+            <i class="legend-box very-high"></i>
+            Very High 80%+
+        </span>
+
+    </div>
+
+
+    <!-- ==========================================
+         HEATMAP
+         ========================================== -->
+
+    <div class="heatmap-wrapper">
+
+        <table class="heatmap-table">
+
+            <thead>
+
+                <tr>
+
+                    <th class="location-column">
+                        PARKING LOCATION
+                    </th>
+
+                    {% for hour in hours %}
+
+                    <th>
+                        {{ "%02d"|format(hour) }}:00
+                    </th>
+
+                    {% endfor %}
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for location in heatmap_data %}
+
+                <tr>
+
+                    <!-- LOCATION -->
+
+                    <td class="location-name">
+
+                        <strong>
+                            {{ location.name }}
+                        </strong>
+
+                    </td>
+
+
+                    <!-- HOURLY DATA -->
+
+                    {% for data in location.hourly %}
+
+                    <td>
+
+                        <div
+                            class="heat-cell {{ data.level }}"
+                            title="{{ location.name }} | {{ '%02d'|format(data.hour) }}:00 | {{ data.percentage }}% occupied"
+                        >
+
+                            <strong>
+                                {{ data.percentage }}%
+                            </strong>
+
+                            <small>
+                                {{ data.occupied }}/{{ data.total }}
+                            </small>
+
+                        </div>
+
+                    </td>
+
+                    {% endfor %}
+
+                </tr>
+
+                {% else %}
+
+                <tr>
+
+                    <td
+                        colspan="{{ hours|length + 1 }}"
+                        class="no-data"
+                    >
+
+                        No parking locations available.
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- ==========================================
+         INSIGHT
+         ========================================== -->
+
+    <div class="heatmap-insight">
+
+        <div class="insight-icon">
+            📊
+        </div>
+
+        <div>
+
+            <h3>
+                Parking Demand Analysis
+            </h3>
+
+            <p>
+                Green areas indicate lower parking demand,
+                while red areas indicate higher occupancy.
+                Use this information to identify peak parking
+                hours and manage parking capacity efficiently.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+
+{% block extra_css %}
+
+<style>
+
+/* =====================================================
+   HEATMAP HEADER
+   ===================================================== */
+
+.heatmap-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-end;
+
+    gap: 2rem;
+
+    margin-bottom: 2rem;
+
+}
+
+
+.heatmap-title {
+
+    font-size: 2.2rem;
+
+    font-weight: 900;
+
+    margin: 0;
+
+    letter-spacing: 1px;
+
+}
+
+
+.heatmap-subtitle {
+
+    margin-top: 8px;
+
+    opacity: 0.7;
+
+}
+
+
+/* =====================================================
+   DATE FILTER
+   ===================================================== */
+
+.date-filter {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+
+}
+
+
+.date-filter label {
+
+    font-size: 0.75rem;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+}
+
+
+.date-filter input {
+
+    padding: 10px 14px;
+
+    border-radius: 10px;
+
+    border: 1px solid rgba(255,255,255,0.2);
+
+    background: rgba(255,255,255,0.08);
+
+    color: var(--cream);
+
+    backdrop-filter: blur(12px);
+
+}
+
+
+/* =====================================================
+   SUMMARY
+   ===================================================== */
+
+.heatmap-summary {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(180px, 1fr));
+
+    gap: 1rem;
+
+    margin-bottom: 1.5rem;
+
+}
+
+
+.heatmap-stat {
+
+    padding: 1.25rem;
+
+    border-radius: 15px;
+
+    background: rgba(255,255,255,0.07);
+
+    border: 1px solid rgba(255,255,255,0.15);
+
+    backdrop-filter: blur(15px);
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.25);
+
+}
+
+
+.heatmap-stat span {
+
+    display: block;
+
+    font-size: 0.72rem;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    opacity: 0.65;
+
+}
+
+
+.heatmap-stat strong {
+
+    display: block;
+
+    margin-top: 6px;
+
+    font-size: 1.5rem;
+
+}
+
+
+/* =====================================================
+   LEGEND
+   ===================================================== */
+
+.heatmap-legend {
+
+    display: flex;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 18px;
+
+    padding: 1rem 1.25rem;
+
+    margin-bottom: 1.5rem;
+
+    border-radius: 14px;
+
+    background: rgba(255,255,255,0.06);
+
+    border: 1px solid rgba(255,255,255,0.12);
+
+}
+
+
+.legend-title {
+
+    font-weight: 800;
+
+    margin-right: 8px;
+
+}
+
+
+.heatmap-legend span {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    font-size: 0.85rem;
+
+}
+
+
+.legend-box {
+
+    width: 18px;
+
+    height: 18px;
+
+    border-radius: 5px;
+
+    display: inline-block;
+
+}
+
+
+/* =====================================================
+   HEATMAP COLORS
+   ===================================================== */
+
+.legend-box.low,
+.heat-cell.low {
+
+    background: rgba(34, 197, 94, 0.25);
+
+}
+
+
+.legend-box.medium,
+.heat-cell.medium {
+
+    background: rgba(234, 179, 8, 0.35);
+
+}
+
+
+.legend-box.high,
+.heat-cell.high {
+
+    background: rgba(249, 115, 22, 0.45);
+
+}
+
+
+.legend-box.very-high,
+.heat-cell.very-high {
+
+    background: rgba(239, 68, 68, 0.55);
+
+}
+
+
+/* =====================================================
+   TABLE
+   ===================================================== */
+
+.heatmap-wrapper {
+
+    width: 100%;
+
+    overflow-x: auto;
+
+    border-radius: 18px;
+
+    border: 1px solid rgba(255,255,255,0.15);
+
+    background: rgba(255,255,255,0.04);
+
+    backdrop-filter: blur(15px);
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,0.3);
+
+}
+
+
+.heatmap-table {
+
+    width: 100%;
+
+    min-width: 1100px;
+
+    border-collapse: separate;
+
+    border-spacing: 6px;
+
+    padding: 10px;
+
+}
+
+
+.heatmap-table th {
+
+    padding: 12px 8px;
+
+    font-size: 0.72rem;
+
+    white-space: nowrap;
+
+    opacity: 0.7;
+
+}
+
+
+.heatmap-table th.location-column {
+
+    text-align: left;
+
+    min-width: 220px;
+
+}
+
+
+.location-name {
+
+    padding: 10px;
+
+    text-align: left;
+
+    white-space: nowrap;
+
+}
+
+
+.heat-cell {
+
+    height: 60px;
+
+    min-width: 65px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    border-radius: 10px;
+
+    border: 1px solid rgba(255,255,255,0.10);
+
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+
+}
+
+
+.heat-cell strong {
+
+    font-size: 0.9rem;
+
+}
+
+
+.heat-cell small {
+
+    font-size: 0.65rem;
+
+    opacity: 0.7;
+
+}
+
+
+.heat-cell:hover {
+
+    transform: scale(1.08);
+
+    border-color: rgba(212,175,55,0.7);
+
+    box-shadow:
+        0 0 18px rgba(212,175,55,0.25);
+
+    z-index: 5;
+
+}
+
+
+/* =====================================================
+   INSIGHT
+   ===================================================== */
+
+.heatmap-insight {
+
+    display: flex;
+
+    gap: 1rem;
+
+    align-items: flex-start;
+
+    margin-top: 1.5rem;
+
+    padding: 1.5rem;
+
+    border-radius: 16px;
+
+    background: rgba(212,175,55,0.08);
+
+    border: 1px solid rgba(212,175,55,0.25);
+
+}
+
+
+.insight-icon {
+
+    font-size: 2rem;
+
+}
+
+
+.heatmap-insight h3 {
+
+    margin: 0 0 5px;
+
+    font-size: 1.1rem;
+
+}
+
+
+.heatmap-insight p {
+
+    margin: 0;
+
+    opacity: 0.75;
+
+}
+
+
+/* =====================================================
+   NO DATA
+   ===================================================== */
+
+.no-data {
+
+    text-align: center;
+
+    padding: 3rem;
+
+    opacity: 0.6;
+
+}
+
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media (max-width: 768px) {
+
+    .heatmap-header {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+
+    .heatmap-title {
+
+        font-size: 1.6rem;
+
+    }
+
+
+    .heatmap-summary {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
+</style>
+
+{% endblock %}

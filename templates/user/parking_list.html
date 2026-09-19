@@ -1,0 +1,32 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Parking Locations{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 1200px; margin: 0 auto; padding: 2rem 1rem;">
+    <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 2rem;">PARKING LOCATIONS</h1>
+
+    {% if areas %}
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1.5rem;">
+        {% for area in areas %}
+        <div class="location-card" style="padding: 1.5rem;">
+            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">{{ area.name }}</h3>
+            <p style="font-size: 0.85rem; opacity: 0.7; margin: 0 0 1rem 0;">{{ area.address }}, {{ area.city }}</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <span style="font-size: 0.9rem; font-weight: 600;">{{ area.available_slots }}/{{ area.total_slots }} Free</span>
+                <span style="font-size: 1.1rem; font-weight: 700; color: #10B981;">₹{{ "%.0f"|format(area.price_per_hour) }}/hr</span>
+            </div>
+<a href="{{ url_for('user.parking_details', area_id=area.id) }}">
+    BOOK NOW →
+</a>        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div style="text-align: center; padding: 4rem; opacity: 0.6;">
+        <p style="font-size: 3rem;">🅿️</p>
+        <p style="font-size: 1.25rem; font-weight: 600;">No Parking Locations Available</p>
+        <p style="font-size: 0.9rem;">Check back later for available spots.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

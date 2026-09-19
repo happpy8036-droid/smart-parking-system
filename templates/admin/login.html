@@ -1,0 +1,23 @@
+{% extends 'layouts/base.html' %}
+{% block title %}Admin Login — Smart Parking{% endblock %}
+{% block content %}
+<section class="auth-section">
+    <div class="container">
+        <div class="auth-card">
+            <h1 class="auth-title">ADMIN LOGIN</h1>
+            <div class="auth-line"></div>
+            <form method="POST" action="/admin/login">
+                <div class="form-group">
+                    <label>EMAIL</label>
+                    <input type="email" name="email" class="brutalist-input" required>
+                </div>
+                <div class="form-group">
+                    <label>PASSWORD</label>
+                    <input type="password" name="password" class="brutalist-input" required>
+                </div>
+                <button type="submit" class="brutalist-btn full-width">LOGIN &rarr;</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

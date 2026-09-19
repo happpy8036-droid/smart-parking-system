@@ -1,0 +1,601 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}{{ area.name }} — Details{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 1200px; margin: 0 auto; padding: 2rem 1rem;">
+
+    <!-- Header -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+            <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.25rem;">{{ area.name }}</h1>
+            <p style="font-size: 1rem; opacity: 0.7; margin: 0;">{{ area.address }}, {{ area.city }}</p>
+        </div>
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <a href="/admin/edit-parking/{{ area.id }}" class="brutalist-btn">EDIT →</a>
+            <a href="/admin/parking-slots/{{ area.id }}" class="brutalist-btn">SLOTS →</a>
+            <a href="/admin/parking-locations" class="brutalist-btn btn-secondary">← BACK</a>
+        </div>
+    </div>
+
+    <!-- Info Cards -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+        <div class="info-card" style="padding: 1.5rem;">
+            <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6; display: block; margin-bottom: 0.5rem;">Total Slots</span>
+            <span style="font-size: 2rem; font-weight: 700;">{{ slots|length }}</span>
+        </div>
+        <div class="info-card" style="padding: 1.5rem;">
+            <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6; display: block; margin-bottom: 0.5rem;">Available</span>
+            <span style="font-size: 2rem; font-weight: 700; color: #10B981;">{{ slots|selectattr('status', 'equalto', 'available')|list|length }}</span>
+        </div>
+        <div class="info-card" style="padding: 1.5rem;">
+            <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6; display: block; margin-bottom: 0.5rem;">Occupied</span>
+            <span style="font-size: 2rem; font-weight: 700; color: #EF4444;">{{ slots|selectattr('status', 'equalto', 'occupied')|list|length }}</span>
+        </div>
+        <div class="info-card" style="padding: 1.5rem;">
+            <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6; display: block; margin-bottom: 0.5rem;">Price/Hr</span>
+            <span style="font-size: 2rem; font-weight: 700;">₹{{ "%.0f"|format(area.price_per_hour) }}</span>
+        </div>
+    </div>
+
+   <!-- PARKING SLOT LAYOUT -->
+
+<div class="parking-layout-section">
+
+    <div class="parking-layout-header">
+        <div>
+            <h2>PARKING LAYOUT</h2>
+            <p>Select an available parking slot</p>
+        </div>
+
+        <div class="parking-legend">
+            <span>
+                <i class="legend-dot available"></i>
+                Available
+            </span>
+
+            <span>
+                <i class="legend-dot occupied"></i>
+                Occupied
+            </span>
+
+            <span>
+                <i class="legend-dot selected"></i>
+                Selected
+            </span>
+        </div>
+    </div>
+
+    <div class="parking-entrance">
+        🚗 &nbsp; ENTRANCE / EXIT
+    </div>
+
+    <div class="parking-road">
+
+        <!-- LEFT SIDE -->
+        <div class="parking-side">
+
+            {% for slot in slots[:(slots|length // 2)] %}
+
+            <button
+                type="button"
+                class="parking-slot {% if slot.status == 'available' %}slot-available{% else %}slot-occupied{% endif %}"
+                data-slot-id="{{ slot.id }}"
+                data-slot-number="{{ slot.slot_number }}"
+                data-status="{{ slot.status }}"
+                {% if slot.status != 'available' %}disabled{% endif %}
+            >
+
+                <span class="slot-icon">🚗</span>
+
+                <span class="slot-number">
+                    {{ slot.slot_number }}
+                </span>
+
+                <span class="slot-status">
+                    {% if slot.status == 'available' %}
+                        AVAILABLE
+                    {% else %}
+                        OCCUPIED
+                    {% endif %}
+                </span>
+
+            </button>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- DRIVE WAY -->
+        <div class="parking-road-center">
+
+            <span>DRIVE</span>
+
+            <div class="road-line"></div>
+
+            <span>WAY</span>
+
+        </div>
+
+
+        <!-- RIGHT SIDE -->
+        <div class="parking-side">
+
+            {% for slot in slots[(slots|length // 2):] %}
+
+            <button
+                type="button"
+                class="parking-slot {% if slot.status == 'available' %}slot-available{% else %}slot-occupied{% endif %}"
+                data-slot-id="{{ slot.id }}"
+                data-slot-number="{{ slot.slot_number }}"
+                data-status="{{ slot.status }}"
+                {% if slot.status != 'available' %}disabled{% endif %}
+            >
+
+                <span class="slot-icon">🚗</span>
+
+                <span class="slot-number">
+                    {{ slot.slot_number }}
+                </span>
+
+                <span class="slot-status">
+                    {% if slot.status == 'available' %}
+                        AVAILABLE
+                    {% else %}
+                        OCCUPIED
+                    {% endif %}
+                </span>
+
+            </button>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    <!-- SELECTED SLOT -->
+
+    <div class="selected-slot-box">
+
+        <span>SELECTED SLOT</span>
+
+        <strong id="selectedSlot">NONE</strong>
+
+    </div>
+
+
+    <!-- BOOK BUTTON -->
+
+    <button
+        type="button"
+        id="bookSelectedSlot"
+        class="book-slot-btn"
+        disabled
+    >
+        🅿️ SELECT A SLOT TO BOOK
+    </button>
+
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const slots = document.querySelectorAll(".parking-slot");
+    const selectedSlot = document.getElementById("selectedSlot");
+    const bookButton = document.getElementById("bookSelectedSlot");
+
+    let selectedSlotId = null;
+
+
+    slots.forEach(function (slot) {
+
+        slot.addEventListener("click", function () {
+
+            if (slot.disabled) {
+                return;
+            }
+
+
+            // Remove previous selection
+            slots.forEach(function (item) {
+                item.classList.remove("slot-selected");
+            });
+
+
+            // Select current slot
+            slot.classList.add("slot-selected");
+
+
+            // Get slot details
+            selectedSlotId = slot.dataset.slotId;
+
+            const slotNumber = slot.dataset.slotNumber;
+
+
+            // Show selected slot
+            selectedSlot.textContent = slotNumber;
+
+
+            // Change button
+            bookButton.disabled = false;
+
+            bookButton.textContent =
+                "🅿️ BOOK SLOT " + slotNumber;
+
+        });
+
+    });
+
+
+    bookButton.addEventListener("click", function () {
+
+        if (!selectedSlotId) {
+            return;
+        }
+
+
+        /*
+         * Selected slot ready.
+         *
+         * We will connect this button to your
+         * existing booking form in the next step.
+         */
+
+        alert(
+            "Selected Parking Slot: " +
+            selectedSlot.textContent
+        );
+
+    });
+
+});
+</script>
+<style>
+/* ================================
+   PARKING LAYOUT
+================================ */
+
+.parking-layout-section {
+    margin-top: 30px;
+    padding: 25px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+}
+
+.parking-layout-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.parking-layout-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+.parking-layout-header p {
+    margin: 5px 0 0;
+    opacity: 0.65;
+}
+
+/* LEGEND */
+
+.parking-legend {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    font-size: 0.85rem;
+}
+
+.parking-legend span {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.legend-dot.available {
+    background: #10b981;
+}
+
+.legend-dot.occupied {
+    background: #ef4444;
+}
+
+.legend-dot.selected {
+    background: #f59e0b;
+}
+
+
+/* ENTRANCE */
+
+.parking-entrance {
+    width: 240px;
+    margin: 0 auto 25px;
+    padding: 12px 20px;
+    text-align: center;
+    border-radius: 10px;
+    background: rgba(16,185,129,0.12);
+    border: 1px solid rgba(16,185,129,0.4);
+    color: #10b981;
+    font-weight: 800;
+}
+
+
+/* MAIN PARKING AREA */
+
+.parking-road {
+    display: grid;
+    grid-template-columns: 1fr 100px 1fr;
+    gap: 20px;
+    align-items: stretch;
+}
+
+
+/* LEFT + RIGHT */
+
+.parking-side {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+
+/* PARKING SLOT */
+
+.parking-slot {
+    min-height: 105px;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+
+    transition: all 0.25s ease;
+
+    font-family: inherit;
+}
+
+
+/* AVAILABLE */
+
+.parking-slot.slot-available {
+    background: rgba(16,185,129,0.18);
+    border-color: rgba(16,185,129,0.55);
+    color: #10b981;
+}
+
+.parking-slot.slot-available:hover {
+    transform: translateY(-5px) scale(1.02);
+    background: rgba(16,185,129,0.30);
+    box-shadow: 0 10px 25px rgba(16,185,129,0.20);
+}
+
+
+/* OCCUPIED */
+
+.parking-slot.slot-occupied {
+    background: rgba(239,68,68,0.18);
+    border-color: rgba(239,68,68,0.45);
+    color: #ef4444;
+    cursor: not-allowed;
+    opacity: 0.75;
+}
+
+
+/* SELECTED */
+
+.parking-slot.slot-selected {
+    background: rgba(245,158,11,0.25) !important;
+    border-color: #f59e0b !important;
+    color: #fbbf24 !important;
+
+    transform: translateY(-6px) scale(1.03);
+
+    box-shadow:
+        0 0 0 3px rgba(245,158,11,0.15),
+        0 12px 30px rgba(245,158,11,0.25);
+}
+
+
+/* SLOT TEXT */
+
+.slot-icon {
+    font-size: 1.5rem;
+}
+
+.slot-number {
+    font-size: 1rem;
+    font-weight: 900;
+}
+
+.slot-status {
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+
+/* DRIVE WAY */
+
+.parking-road-center {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 100%;
+
+    background: rgba(255,255,255,0.025);
+    border-left: 2px dashed rgba(255,255,255,0.15);
+    border-right: 2px dashed rgba(255,255,255,0.15);
+
+    color: rgba(255,255,255,0.4);
+
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.road-line {
+    width: 2px;
+    height: 60%;
+    margin: 15px 0;
+
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.5) 0px,
+        rgba(255,255,255,0.5) 20px,
+        transparent 20px,
+        transparent 40px
+    );
+}
+
+
+/* SELECTED BOX */
+
+.selected-slot-box {
+    margin: 25px auto 15px;
+    max-width: 350px;
+
+    padding: 15px 20px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border-radius: 12px;
+
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.15);
+}
+
+.selected-slot-box span {
+    font-size: 0.75rem;
+    opacity: 0.6;
+    letter-spacing: 1px;
+}
+
+.selected-slot-box strong {
+    color: #f59e0b;
+    font-size: 1.2rem;
+}
+
+
+/* BOOK BUTTON */
+
+.book-slot-btn {
+    display: block;
+
+    width: 100%;
+    max-width: 400px;
+
+    margin: 0 auto;
+
+    padding: 15px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: #10b981;
+    color: white;
+
+    font-size: 1rem;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+}
+
+.book-slot-btn:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(16,185,129,0.3);
+}
+
+.book-slot-btn:disabled {
+    background: rgba(255,255,255,0.10);
+    color: rgba(255,255,255,0.4);
+    cursor: not-allowed;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 800px) {
+
+    .parking-road {
+        grid-template-columns: 1fr;
+    }
+
+    .parking-road-center {
+        min-height: 80px;
+        border-left: none;
+        border-right: none;
+        border-top: 2px dashed rgba(255,255,255,0.15);
+        border-bottom: 2px dashed rgba(255,255,255,0.15);
+
+        flex-direction: row;
+        gap: 20px;
+    }
+
+    .road-line {
+        width: 60%;
+        height: 2px;
+        margin: 0;
+    }
+
+    .parking-side {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 500px) {
+
+    .parking-layout-section {
+        padding: 15px;
+    }
+
+    .parking-side {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    .parking-slot {
+        min-height: 90px;
+    }
+
+    .slot-icon {
+        font-size: 1.2rem;
+    }
+
+    .slot-number {
+        font-size: 0.85rem;
+    }
+
+    .slot-status {
+        font-size: 0.55rem;
+    }
+}
+</style>
+{% endblock %}

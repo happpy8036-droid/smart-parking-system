@@ -1,0 +1,7 @@
+Flask
+Flask-SQLAlchemy
+Flask-Login
+PyMySQL
+qrcode
+Pillow
+python-dotenv

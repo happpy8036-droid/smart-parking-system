@@ -1,0 +1,64 @@
+{% extends 'layouts/base.html' %}
+{% block title %}Dashboard — Smart Parking{% endblock %}
+{% block content %}
+<section class="page-section">
+    <div class="container">
+        <h1 class="page-title">DASHBOARD</h1>
+        <div class="red-line"></div>
+        <div class="stats-row">
+            <div class="stat-box">
+                <span class="stat-big">{{ total_bookings }}</span>
+                <span class="stat-label">TOTAL BOOKINGS</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-big">{{ active_bookings }}</span>
+                <span class="stat-label">ACTIVE BOOKINGS</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-big">{{ current_user.vehicles|length }}</span>
+                <span class="stat-label">VEHICLES</span>
+            </div>
+        </div>
+        <h2 class="section-subtitle">RECENT BOOKINGS</h2>
+        <div class="table-container">
+            <table class="brutalist-table">
+                <thead>
+                    <tr>
+                        <th>REF</th>
+                        <th>LOCATION</th>
+                        <th>DATE</th>
+                        <th>TIME</th>
+                        <th>STATUS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for b in bookings %}
+                    <tr>
+                        <td><a href="/user/booking/{{ b.id }}">{{ b.booking_ref }}</a></td>
+                        <td>{{ b.area.name }}</td>
+                        <td>{{ b.booking_date }}</td>
+                        <td>{{ b.start_time }} — {{ b.end_time }}</td>
+                        <td><span class="status-{{ b.status }}">{{ b.status|upper }}</span></td>
+                    </tr>
+                    {% endfor %}
+                    {% if not bookings %}
+                    <tr><td colspan="5" class="empty-row">No bookings yet. <a href="/user/search">Book your first slot &rarr;</a></td></tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+        <h2 class="section-subtitle">NOTIFICATIONS</h2>
+        <div class="notif-list">
+            {% for n in notifications %}
+            <div class="notif-item">
+                <span class="notif-title">{{ n.title }}</span>
+                <span class="notif-time">{{ n.created_at.strftime('%d %b %Y') }}</span>
+            </div>
+            {% endfor %}
+            {% if not notifications %}
+            <div class="notif-empty">No new notifications</div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'layouts/base.html' %}
+{% block title %}Add Slot — Admin{% endblock %}
+{% block content %}
+<section class="page-section">
+    <div class="container">
+        <h1 class="page-title">ADD SLOT</h1>
+        <div class="red-line"></div>
+        <form method="POST" action="/admin/add-slot/{{ area_id }}" class="admin-form">
+            <div class="form-group"><label>SLOT NUMBER</label><input type="text" name="slot_number" class="brutalist-input" required placeholder="e.g. A-101"></div>
+            <div class="form-group"><label>FLOOR NUMBER</label><input type="text" name="floor_number" class="brutalist-input" value="GF"></div>
+            <div class="form-group"><label>SLOT TYPE</label>
+                <select name="slot_type" class="brutalist-input">
+                    <option value="standard">STANDARD</option>
+                    <option value="premium">PREMIUM</option>
+                    <option value="ev_charging">EV CHARGING</option>
+                    <option value="handicap">HANDICAP</option>
+                    <option value="bike">BIKE</option>
+                </select>
+            </div>
+            <div class="form-group"><label>PRICE PER HOUR (₹)</label><input type="number" name="price_per_hour" class="brutalist-input" value="50" required></div>
+            <button type="submit" class="brutalist-btn">ADD SLOT &rarr;</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'layouts/base.html' %}
+{% block title %}Delete Slot — Admin{% endblock %}
+{% block content %}
+<section class="page-section">
+    <div class="container">
+        <h1 class="page-title">DELETE PARKING SLOT</h1>
+        <div class="red-line"></div>
+        <div style="max-width:600px;margin:0 auto;background:#111;border:3px solid #ff4444;padding:2rem;">
+            <p style="color:#fff;font-size:1.2rem;margin-bottom:1rem;">
+                <strong style="color:#ff4444;">WARNING:</strong> You are about to delete slot:
+            </p>
+            <div style="color:#fff;margin-bottom:2rem;">
+                <p><strong>{{ slot.slot_number }}</strong> ({{ slot.slot_type }}) — ₹{{ slot.price_per_hour }}/hr</p>
+                <p>Status: {{ slot.status }}</p>
+            </div>
+            <form method="POST" action="/admin/delete-slot/{{ slot.id }}">
+                <button type="submit" class="brutalist-btn" style="background:#ff4444;color:#fff;margin-right:1rem;">CONFIRM DELETE &rarr;</button>
+                <a href="/admin/parking-slots/{{ area_id }}" class="brutalist-btn" style="background:#333;color:#fff;">CANCEL</a>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

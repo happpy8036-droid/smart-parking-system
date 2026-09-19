@@ -1,0 +1,185 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Book Slot{% endblock %}
+
+{% block content %}
+
+<div class="container"
+     style="max-width: 500px; margin: 0 auto; padding: 2rem 1rem;">
+
+    <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 1.5rem;">
+        BOOK SLOT
+    </h1>
+
+    <!-- Booking Information -->
+    <div class="info-card booking-glass"
+         style="padding: 1.5rem; margin-bottom: 1.5rem;">
+
+        <p style="margin: 0 0 0.5rem 0;">
+            <strong>Location:</strong> {{ area.name }}
+        </p>
+
+        <p style="margin: 0 0 0.5rem 0;">
+            <strong>Slot:</strong> {{ slot.slot_number }}
+        </p>
+
+        <p style="margin: 0 0 0.5rem 0;">
+            <strong>Type:</strong>
+            {{ slot.slot_type|replace('_', ' ')|title }}
+        </p>
+
+        <p style="margin: 0;">
+            <strong>Price:</strong>
+            ₹{{ "%.0f"|format(slot.price_per_hour) }}/hr
+        </p>
+
+    </div>
+
+    <!-- Booking Form -->
+    <form method="POST"
+          action="/booking/{{ area.id }}"
+          class="booking-glass"
+          style="padding: 1.5rem;">
+
+        <!-- Slot -->
+        <input type="hidden"
+               name="slot_id"
+               value="{{ slot.id }}">
+
+        <!-- Date -->
+        <div style="margin-bottom: 1.5rem;">
+
+            <label
+                style="display: block;
+                       font-size: 0.8rem;
+                       text-transform: uppercase;
+                       letter-spacing: 1px;
+                       margin-bottom: 0.5rem;
+                       font-weight: 600;">
+                Date
+            </label>
+
+            <input
+                type="date"
+                name="booking_date"
+                required
+                value="{{ today }}"
+                class="brutalist-input"
+                style="width: 100%;">
+        </div>
+
+        <!-- Start Time -->
+        <div style="margin-bottom: 1.5rem;">
+
+            <label
+                style="display: block;
+                       font-size: 0.8rem;
+                       text-transform: uppercase;
+                       letter-spacing: 1px;
+                       margin-bottom: 0.5rem;
+                       font-weight: 600;">
+                Start Time
+            </label>
+
+            <input
+                type="time"
+                name="start_time"
+                required
+                class="brutalist-input"
+                style="width: 100%;">
+        </div>
+
+        <!-- Hours -->
+        <div style="margin-bottom: 1.5rem;">
+
+            <label
+                style="display: block;
+                       font-size: 0.8rem;
+                       text-transform: uppercase;
+                       letter-spacing: 1px;
+                       margin-bottom: 0.5rem;
+                       font-weight: 600;">
+                Hours
+            </label>
+
+            <input
+                type="number"
+                name="hours"
+                min="1"
+                max="24"
+                value="1"
+                required
+                class="brutalist-input"
+                style="width: 100%;">
+        </div>
+
+        <!-- Vehicle -->
+        <div style="margin-bottom: 1.5rem;">
+
+            <label
+                style="display: block;
+                       font-size: 0.8rem;
+                       text-transform: uppercase;
+                       letter-spacing: 1px;
+                       margin-bottom: 0.5rem;
+                       font-weight: 600;">
+                Vehicle
+            </label>
+
+            <select
+                name="vehicle_id"
+                class="brutalist-input"
+                style="width: 100%;">
+
+                <option value="">Select Vehicle</option>
+
+                {% if vehicles %}
+                    {% for vehicle in vehicles %}
+                        <option value="{{ vehicle.id }}">
+                            {{ vehicle.vehicle_number }}
+                            - {{ vehicle.vehicle_type|title }}
+                        </option>
+                    {% endfor %}
+                {% endif %}
+
+            </select>
+
+        </div>
+
+        <!-- Notes -->
+        <div style="margin-bottom: 1.5rem;">
+
+            <label
+                style="display: block;
+                       font-size: 0.8rem;
+                       text-transform: uppercase;
+                       letter-spacing: 1px;
+                       margin-bottom: 0.5rem;
+                       font-weight: 600;">
+                Notes
+            </label>
+
+            <textarea
+                name="notes"
+                rows="3"
+                class="brutalist-input"
+                style="width: 100%; resize: vertical;"
+                placeholder="Optional notes"></textarea>
+
+        </div>
+
+        <!-- Submit -->
+        <button
+            type="submit"
+            class="brutalist-btn"
+            style="width: 100%;">
+
+            PROCEED TO PAYMENT →
+
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

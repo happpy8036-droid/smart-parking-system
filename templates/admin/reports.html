@@ -1,0 +1,40 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Reports — Admin{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 1200px; margin: 0 auto; padding: 2rem 1rem;">
+    <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 2rem;">REPORTS</h1>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+        <div class="info-card" style="padding: 1.5rem;">
+            <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6; display: block; margin-bottom: 0.5rem;">Total Bookings</span>
+            <span style="font-size: 2rem; font-weight: 700;">{{ total_bookings }}</span>
+        </div>
+        <div class="info-card" style="padding: 1.5rem;">
+            <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6; display: block; margin-bottom: 0.5rem;">Total Revenue</span>
+            <span style="font-size: 2rem; font-weight: 700; color: #10B981;">₹{{ "%.0f"|format(total_revenue) }}</span>
+        </div>
+        <div class="info-card" style="padding: 1.5rem;">
+            <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6; display: block; margin-bottom: 0.5rem;">Total Users</span>
+            <span style="font-size: 2rem; font-weight: 700;">{{ total_users }}</span>
+        </div>
+        <div class="info-card" style="padding: 1.5rem;">
+            <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6; display: block; margin-bottom: 0.5rem;">Locations</span>
+            <span style="font-size: 2rem; font-weight: 700;">{{ total_locations }}</span>
+        </div>
+    </div>
+    <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">LOCATION STATS</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem;">
+        {% for loc in location_stats %}
+        <div class="location-card" style="padding: 1.25rem;">
+            <div style="font-weight: 700; margin-bottom: 0.5rem;">{{ loc.name }}</div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; opacity: 0.7;">
+                <span>Bookings: {{ loc.booking_count }}</span>
+                <span>Revenue: ₹{{ "%.0f"|format(loc.revenue) }}</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

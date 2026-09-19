@@ -1,0 +1,44 @@
+{% extends 'layouts/base.html' %}
+{% block title %}Admin Dashboard — Smart Parking{% endblock %}
+{% block content %}
+<section class="page-section">
+    <div class="container">
+        <h1 class="page-title">ADMIN DASHBOARD</h1>
+        <div class="red-line"></div>
+        <div class="stats-row">
+            <div class="stat-box"><span class="stat-big">{{ total_users }}</span><span class="stat-label">TOTAL USERS</span></div>
+            <div class="stat-box"><span class="stat-big">{{ total_areas }}</span><span class="stat-label">LOCATIONS</span></div>
+            <div class="stat-box"><span class="stat-big">{{ total_bookings }}</span><span class="stat-label">BOOKINGS</span></div>
+            <div class="stat-box"><span class="stat-big">{{ confirmed_bookings }}</span><span class="stat-label">CONFIRMED</span></div>
+            <div class="stat-box"><span class="stat-big">₹{{ '%0.0f'|format(total_revenue) }}</span><span class="stat-label">REVENUE</span></div>
+        </div>
+        <h2 class="section-subtitle">RECENT BOOKINGS</h2>
+        <div class="table-container">
+            <table class="brutalist-table">
+                <thead>
+                    <tr><th>REF</th><th>USER</th><th>LOCATION</th><th>SLOT</th><th>DATE</th><th>AMOUNT</th><th>STATUS</th></tr>
+                </thead>
+                <tbody>
+                    {% for b in recent_bookings %}
+                    <tr>
+                        <td>{{ b.booking_ref }}</td>
+                        <td>{{ b.user.name }}</td>
+                        <td>{{ b.area.name }}</td>
+                        <td>{{ b.slot.slot_number }}</td>
+                        <td>{{ b.booking_date }}</td>
+                        <td>₹{{ '%0.2f'|format(b.total_amount) }}</td>
+                        <td><span class="status-{{ b.status }}">{{ b.status|upper }}</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="action-row">
+            <a href="/admin/parking-locations" class="brutalist-btn">MANAGE LOCATIONS &rarr;</a>
+            <a href="/admin/bookings" class="brutalist-btn btn-outline">ALL BOOKINGS &rarr;</a>
+            <a href="/admin/reports" class="brutalist-btn btn-outline">REPORTS &rarr;</a>
+            <a href="{{ url_for('admin.feedback') }}"class="brutalist-btn btn-outline">💬 Feedback</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
