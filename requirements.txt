@@ -5,3 +5,4 @@ PyMySQL
 qrcode
 Pillow
 python-dotenv
+gunicorn
